@@ -17,7 +17,7 @@
             --stone-800: #292524;
             --yellow-400: #facc15;
             --cyber-blue: #acf7ff;
-            --gold: #d4af37; /* Premium Gold Color */
+            --gold: #d4af37;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
@@ -39,45 +39,13 @@
             border: 1px solid rgba(172, 247, 255, 0.1);
         }
 
-        /* --- Premium Typography for Homepage --- */
-        .premium-eid-wish {
-            text-align: center;
-            margin-top: 20px;
-            margin-bottom: 30px;
-        }
-        .premium-eid-wish .part-1 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 3rem;
-            line-height: 1;
-            text-transform: uppercase;
-            background: linear-gradient(180deg, #fff 0%, #a0a0a0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 0;
-            letter-spacing: -2px;
-        }
-        .premium-eid-wish .part-2 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 2.2rem;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin: -5px 0 0 0;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
-        }
-        .premium-eid-wish .part-3 {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-weight: 500;
-            font-size: 1.4rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin: 10px 0 0 0;
-            display: block;
-        }
+        /* --- Stylish English Typography --- */
+        .premium-eid-wish { text-align: center; margin-top: 20px; margin-bottom: 30px; }
+        .premium-eid-wish .part-1 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 3rem; line-height: 1; text-transform: uppercase; background: linear-gradient(180deg, #fff 0%, #a0a0a0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; letter-spacing: -2px; }
+        .premium-eid-wish .part-2 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 2.2rem; text-transform: uppercase; color: var(--gold); margin: -5px 0 0 0; letter-spacing: 2px; text-shadow: 0 0 15px rgba(212, 175, 55, 0.6); }
+        .premium-eid-wish .part-3 { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 500; font-size: 1.4rem; color: rgba(255, 255, 255, 0.8); margin: 10px 0 0 0; display: block; }
 
-        /* --- TV Styles --- */
+        /* --- TV & Animation Styles --- */
         .main_wrapper { display: flex; align-items: center; justify-content: center; width: 100%; height: auto; margin: 15px 0; scale: 1.1; }
         .main { display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .antenna { width: 5em; height: 5em; border-radius: 50%; border: 2px solid black; background-color: #f27405; margin-bottom: -6em; z-index: -1; position: relative;}
@@ -102,10 +70,13 @@
         .q-box { width: 100%; margin-bottom: 25px; }
         .q-front { padding: 22px; border-radius: 15px; font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, #f27121, #e94057, #8a2387); text-align: center; }
 
-        .button { font-family: "Rubik", sans-serif; cursor: pointer; position: relative; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; border-radius: 1rem; color: var(--stone-50); background: none; border: none; margin-top: 20px; }
+        /* --- FIXED ANIMATION --- */
+        .button { font-family: "Rubik", sans-serif; cursor: pointer; position: relative; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; border-radius: 1rem; color: var(--stone-50); background: none; border: none; margin-top: 35px; } /* Margin increased */
+        .button::before { content: ""; position: absolute; z-index: 0; height: 220%; aspect-ratio: 1; background: white; clip-path: polygon(100% 50%, 91.48% 56.57%, 97.55% 65.45%, 87.42% 69.07%, 90.45% 79.39%, 79.7% 79.7%, 79.39% 90.45%, 69.07% 87.42%, 65.45% 97.55%, 56.57% 91.48%, 50% 100%, 43.43% 91.48%, 34.55% 97.55%, 30.93% 87.42%, 20.61% 90.45%, 20.3% 79.7%, 9.55% 79.39%, 12.58% 69.07%, 2.45% 65.45%, 8.52% 56.57%, 0% 50%, 8.52% 43.43%, 2.45% 34.55%, 12.58% 30.93%, 9.55% 20.61%, 20.3% 20.3%, 20.61% 9.55%, 30.93% 12.58%, 34.55% 2.45%, 43.43% 8.52%, 50% 0%, 56.57% 8.52%, 65.45% 2.45%, 69.07% 12.58%, 79.39% 9.55%, 79.7% 20.3%, 90.45% 20.61%, 87.42% 30.93%, 97.55% 34.55%, 91.48% 43.43%); animation: star-rotate 4s linear infinite; opacity: 0.1; }
         .button > div { padding: 2px; border-radius: 1rem; background-color: var(--yellow-400); transform: translate(-4px, -4px); box-shadow: 2px 2px 0 0 var(--yellow-400), 0 0 0 2px var(--stone-800), 0 0 0 4px var(--stone-50); }
         .button > div > div { position: relative; border-radius: calc(1rem - 2px); background-color: var(--stone-800); overflow: hidden; padding: 0.8rem 1.8rem; }
         
+        @keyframes star-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .hidden { display: none; }
         .share-box { background: rgba(255,255,255,0.08); padding: 15px; border-radius: 12px; border: 1.5px dashed var(--accent); margin: 20px 0; color: #acf7ff; text-align: center; font-size: 0.8rem; word-break: break-all; }
         #custom-toast { position: fixed; top: 30px; background: #fff; padding: 12px 30px; border-radius: 50px; color: #000; font-weight: 800; z-index: 9999; transform: translateY(-150px); transition: 0.5s; }
@@ -272,7 +243,6 @@
             showScreen('screen-final');
             const randomExtra = Math.floor(Math.random() * 11);
             const totalSalami = (score * 10) + randomExtra;
-
             const wishes = [
                 `হেই ${userName}, ঈদ মোবারক! তুমি ${score}টি সঠিক উত্তর দিয়ে আমার মন জয় করেছো। তাই উপহার হিসেবে ৳${totalSalami} সালামি তোমার জন্য বরাদ্দ করলাম!`,
                 `দারুণ খেলেছো ${userName}! আমার সম্পর্কে তোমার জ্ঞান দেখে আমি অবাক। তোমার এই চেষ্টার পুরস্কার হিসেবে ৳${totalSalami} সালামি দিচ্ছি, আনন্দ করো!`,
@@ -290,13 +260,9 @@
                 `${userName}, তুমি যে এত ভালো উত্তর দেবে ভাবিনি! তোমার জয়ের স্মারক হিসেবে ৳${totalSalami} সালামি রইলো। অনেক হাসি আর খুশিতে ভরে উঠুক তোমার দিন।`,
                 `প্রিয় বন্ধু ${userName}, তোমার তীক্ষ্ণ বুদ্ধির জয় হোক! আমার সম্পর্কে এত নিখুঁত জানার জন্য এই ৳${totalSalami} সালামি ছোট একটি উপহার। ঈদ মোবারক!`
             ];
-            
             const finalWish = wishes[Math.floor(Math.random() * wishes.length)];
-            
             document.getElementById('final-body').innerHTML = `
-                <div style="text-align:center;">
-                    <h2 style="color:var(--yellow-400); margin-bottom:5px;">Score: ${score}/${quizData.length}</h2>
-                </div>
+                <div style="text-align:center;"><h2 style="color:var(--yellow-400); margin-bottom:5px;">Score: ${score}/${quizData.length}</h2></div>
                 <div class="main_wrapper">
                     <div class="main">
                         <div class="antenna"><div class="antenna_shadow"></div><div class="a1"></div><div class="a2"></div></div>
@@ -310,9 +276,7 @@
                         <div class="bottom"><div class="base1"></div><div class="base2"></div></div>
                     </div>
                 </div>
-                <p style="text-align:center; color:rgba(255,255,255,0.6); font-size:0.85rem; padding: 0 15px; margin-top:20px;">
-                    আপনিও কি চান আপনার বন্ধুরা আপনাকে কত চেনে তা জানতে? তাহলে বন্ধুদেরকেও বলুন কুইজ তৈরি করতে!
-                </p>
+                <p style="text-align:center; color:rgba(255,255,255,0.6); font-size:0.85rem; padding: 0 15px; margin-top:20px;">আপনিও কি চান আপনার বন্ধুরা আপনাকে কত চেনে তা জানতে? তাহলে বন্ধুদেরকেও বলুন কুইজ তৈরি করতে!</p>
                 <div style="display:flex; justify-content:center; margin-top:10px;">${generateUiverseBtn("হোমে ফিরুন", "location.href=window.location.pathname")}</div>
             `;
             setTimeout(() => typeWriter(finalWish, document.getElementById('type-text')), 500);
