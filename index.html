@@ -17,7 +17,7 @@
             --stone-800: #292524;
             --yellow-400: #facc15;
             --cyber-blue: #acf7ff;
-            --gold: #d4af37;
+            --gold: #d4af37; /* Premium Gold Color */
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
@@ -39,11 +39,45 @@
             border: 1px solid rgba(172, 247, 255, 0.1);
         }
 
-        .premium-eid-wish { text-align: center; margin-top: 20px; margin-bottom: 30px; }
-        .premium-eid-wish .part-1 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 3rem; line-height: 1; text-transform: uppercase; background: linear-gradient(180deg, #fff 0%, #a0a0a0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; letter-spacing: -2px; }
-        .premium-eid-wish .part-2 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 2.2rem; text-transform: uppercase; color: var(--gold); margin: -5px 0 0 0; letter-spacing: 2px; text-shadow: 0 0 15px rgba(212, 175, 55, 0.6); }
-        .premium-eid-wish .part-3 { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 500; font-size: 1.4rem; color: rgba(255, 255, 255, 0.8); margin: 10px 0 0 0; display: block; }
+        /* --- Premium Typography for Homepage --- */
+        .premium-eid-wish {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        .premium-eid-wish .part-1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 3rem;
+            line-height: 1;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, #fff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+            letter-spacing: -2px;
+        }
+        .premium-eid-wish .part-2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin: -5px 0 0 0;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+        }
+        .premium-eid-wish .part-3 {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 500;
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 10px 0 0 0;
+            display: block;
+        }
 
+        /* --- TV Styles --- */
         .main_wrapper { display: flex; align-items: center; justify-content: center; width: 100%; height: auto; margin: 15px 0; scale: 1.1; }
         .main { display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .antenna { width: 5em; height: 5em; border-radius: 50%; border: 2px solid black; background-color: #f27405; margin-bottom: -6em; z-index: -1; position: relative;}
@@ -68,28 +102,106 @@
         .q-box { width: 100%; margin-bottom: 25px; }
         .q-front { padding: 22px; border-radius: 15px; font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, #f27121, #e94057, #8a2387); text-align: center; }
 
-        .button { font-family: "Rubik", sans-serif; cursor: pointer; position: relative; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; border-radius: 1rem; color: var(--stone-50); background: none; border: none; margin-top: 35px; }
-        .button::before { content: ""; position: absolute; z-index: 0; height: 220%; aspect-ratio: 1; background: white; clip-path: polygon(100% 50%, 91.48% 56.57%, 97.55% 65.45%, 87.42% 69.07%, 90.45% 79.39%, 79.7% 79.7%, 79.39% 90.45%, 69.07% 87.42%, 65.45% 97.55%, 56.57% 91.48%, 50% 100%, 43.43% 91.48%, 34.55% 97.55%, 30.93% 87.42%, 20.61% 90.45%, 20.3% 79.7%, 9.55% 79.39%, 12.58% 69.07%, 2.45% 65.45%, 8.52% 56.57%, 0% 50%, 8.52% 43.43%, 2.45% 34.55%, 12.58% 30.93%, 9.55% 20.61%, 20.3% 20.3%, 20.61% 9.55%, 30.93% 12.58%, 34.55% 2.45%, 43.43% 8.52%, 50% 0%, 56.57% 8.52%, 65.45% 2.45%, 69.07% 12.58%, 79.39% 9.55%, 79.7% 20.3%, 90.45% 20.61%, 87.42% 30.93%, 97.55% 34.55%, 91.48% 43.43%); animation: star-rotate 4s linear infinite; opacity: 0.1; }
+        .button { font-family: "Rubik", sans-serif; cursor: pointer; position: relative; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; border-radius: 1rem; color: var(--stone-50); background: none; border: none; margin-top: 20px; }
         .button > div { padding: 2px; border-radius: 1rem; background-color: var(--yellow-400); transform: translate(-4px, -4px); box-shadow: 2px 2px 0 0 var(--yellow-400), 0 0 0 2px var(--stone-800), 0 0 0 4px var(--stone-50); }
         .button > div > div { position: relative; border-radius: calc(1rem - 2px); background-color: var(--stone-800); overflow: hidden; padding: 0.8rem 1.8rem; }
         
-        @keyframes star-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .hidden { display: none; }
         .share-box { background: rgba(255,255,255,0.08); padding: 15px; border-radius: 12px; border: 1.5px dashed var(--accent); margin: 20px 0; color: #acf7ff; text-align: center; font-size: 0.8rem; word-break: break-all; }
         #custom-toast { position: fixed; top: 30px; background: #fff; padding: 12px 30px; border-radius: 50px; color: #000; font-weight: 800; z-index: 9999; transform: translateY(-150px); transition: 0.5s; }
         #custom-toast.show { transform: translateY(0); }
 
-        /* --- Rakib's Personal Card CSS --- */
-        .card { width: 190px; height: 254px; background: rgb(38, 38, 38); box-shadow: 7px 5px 10px rgba(0, 0, 0, 0.333); margin: 20px auto; text-align: left; }
-        .imge { height: 70px; background-color: #ff5858; position: relative; }
-        .imge .Usericon { background-color: #414141; transform: translateX(10px) translateY(10px); width: 50px; height: 50px; border-radius: 10px; background-image: url('https://api.dicebear.com/7.x/avataaars/svg?seed=Rakib'); background-size: cover; }
-        .imge .UserName { background-color: #414141; width: 60px; height: 15px; border-width: 10px; border-radius: 5px; border-color: #262626; color: #fff; font-size: 11px; font-weight: bold; transform: translateX(70px) translateY(-35px); display: flex; align-items: center; justify-content: center; font-family: sans-serif; }
-        .imge .Id { background-color: #414141; width: 100px; height: 15px; border-width: 10px; border-radius: 5px; border-color: #262626; color: #aaa; font-size: 10px; font-weight: bold; transform: translateX(70px) translateY(-25px); display: flex; align-items: center; padding-left: 5px; font-family: sans-serif; }
-        .Description { border-color: #141414; background-color: #414141; transform: translate(5px, 6px); width: 180px; height: 130px; border-radius: 5px; padding: 10px; font-size: 11px; color: #ddd; font-family: sans-serif; line-height: 1.4; overflow: hidden; }
-        .social-media:before { content: " "; display: block; width: 100%; height: 2px; transform: translatey(10px); background: #414141; }
-        .social-media a { margin-right: 15px; text-decoration: none; color: inherit; }
-        .social-media a:last-child { margin-right: 0; }
-        .social-media a svg { color: #ff5858; transform: translatex(25px) translateY(20px); width: 20px; fill: currentColor; }
+        /* --- Rakib's Personal Card CSS (Updated with Premium Style) --- */
+        .card {
+            width: 200px; /* Slightly wider for better spacing */
+            height: 270px; /* Slightly taller for more content space */
+            background: rgb(30, 30, 30); /* Darker background */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); /* Soft shadow */
+            margin: 20px auto;
+            text-align: left;
+            border-radius: 15px; /* Rounded corners for the whole card */
+            overflow: hidden; /* Ensure content stays within rounded corners */
+            border: 1px solid rgba(255, 255, 255, 0.05); /* Subtle border */
+        }
+        .imge {
+            height: 90px; /* Taller header */
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%); /* Dark gradient */
+            position: relative;
+            border-bottom: 2px solid var(--gold); /* Golden separator */
+        }
+        .imge .Usericon {
+            background-color: #2a2a2a;
+            transform: translateX(15px) translateY(15px); /* Adjusted position */
+            width: 65px; /* Bigger icon */
+            height: 65px; /* Bigger icon */
+            border-radius: 50%; /* Circular icon for a premium look */
+            background-image: url('https://api.dicebear.com/7.x/avataaars/svg?seed=Rakib');
+            background-size: cover;
+            border: 3px solid var(--gold); /* Golden border around icon */
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5); /* Golden glow */
+        }
+        .imge .UserName {
+            font-family: 'Playfair Display', serif; /* Premium Font */
+            font-style: italic;
+            font-weight: 500;
+            font-size: 1.4rem; /* Bigger name */
+            color: #fff; /* White color */
+            margin: 0;
+            transform: translateX(95px) translateY(-50px); /* Positioned next to icon */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for better readability */
+        }
+        .imge .Id {
+            font-family: sans-serif; /* Keep simple for ID */
+            color: var(--gold); /* Golden color for ID */
+            font-size: 10px;
+            font-weight: bold;
+            transform: translateX(95px) translateY(-45px); /* Positioned below name */
+            display: flex;
+            align-items: center;
+        }
+        .Description {
+            background-color: #2a2a2a; /* Slightly lighter description box */
+            transform: translate(10px, 10px); /* Adjusted padding/position */
+            width: 180px;
+            height: 125px;
+            border-radius: 10px; /* More rounded corners */
+            padding: 12px;
+            font-family: 'Playfair Display', serif; /* Premium Font */
+            font-style: italic;
+            font-size: 11px;
+            color: #eee; /* Light gray color for text */
+            line-height: 1.5; /* Better line spacing */
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.03); /* Subtle border */
+        }
+        .Description strong {
+            color: #fff; /* White for strong labels */
+            font-weight: bold;
+        }
+        .social-media {
+            margin-top: 15px; /* Increased top margin */
+            padding-top: 10px;
+            display: flex;
+            justify-content: center; /* Center icons */
+            gap: 15px; /* Space between icons */
+        }
+        .social-media:before {
+            display: none; /* Removed the line separator */
+        }
+        .social-media a {
+            text-decoration: none;
+            color: var(--gold); /* Default color for icons */
+            transition: color 0.3s ease; /* Smooth transition on hover */
+        }
+        .social-media a:hover {
+            color: #fff; /* White color on hover */
+        }
+        .social-media a svg {
+            width: 22px; /* Adjusted icon size */
+            height: 22px;
+            fill: currentColor;
+            transform: none; /* Reset transformation */
+        }
     </style>
 </head>
 <body>
@@ -222,10 +334,10 @@
                       <div class="imge">
                         <div class="Usericon"></div>
                         <p class="UserName">Rakib</p>
-                        <p class="Id">@rakib.au25</p>
+                        <p class="Id">@MdRakib94110724</p>
                       </div>
                       <div class="Description">
-                        Md Rakib<br>
+                        <strong>Md Rakib</strong><br>
                         Lives in Melbourne, Australia.<br>
                         Cyber Security Student (2nd Sem).<br>
                         Victoria University.
@@ -239,6 +351,9 @@
                         </a>
                         <a href="https://www.facebook.com/mdrakib11005511" target="_blank">
                           <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"></path></svg>
+                        </a>
+                        <a href="https://x.com/MdRakib94110724" target="_blank">
+                          <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"></path></svg>
                         </a>
                       </div>
                     </div>
