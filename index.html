@@ -37,6 +37,7 @@
             border-radius: 30px; padding: 25px; position: relative;
         }
 
+        /* Question Box Styling */
         .q-box { position: relative; width: 100%; margin-bottom: 30px; animation: slideUp 0.4s ease; }
         .q-front {
             display: flex; align-items: center; justify-content: space-between;
@@ -45,6 +46,7 @@
             box-shadow: 0 10px 20px rgba(233, 64, 87, 0.3);
         }
 
+        /* Option Button Styling */
         .opt-btn {
             min-height: 55px; width: 100%; display: flex; align-items: center;
             justify-content: flex-start; padding-left: 25px; position: relative;
@@ -61,8 +63,10 @@
         }
 
         .opt-btn:after { content: ""; position: absolute; left: -2px; bottom: -2px; border-top: 15px solid transparent; border-left: 15px solid #fffcf7; }
+        
         .opt-btn.selected { background: rgba(172, 247, 255, 0.4); border-color: #fff; box-shadow: 0 0 15px rgba(172, 247, 255, 0.3); }
 
+        /* Action Button Styling */
         .button-wrapper { display: flex; justify-content: center; margin-top: auto; position: relative; }
         .button { cursor: pointer; position: relative; display: inline-flex; align-items: center; justify-content: center; border: none; background: none; }
         .button::before {
@@ -105,7 +109,6 @@
     </div>
 
     <script>
-        // --- আপনার স্ক্রিনশট থেকে নেওয়া ফায়ারবেস কনফিগারেশন ---
         const firebaseConfig = {
             apiKey: "AIzaSyBTKGsT5CzPBbEGmqHfvkGPDHfIa8c6fQs",
             authDomain: "eid-salami-quiz.firebaseapp.com",
@@ -113,7 +116,7 @@
             storageBucket: "eid-salami-quiz.firebasestorage.app",
             messagingSenderId: "415072344103",
             appId: "1:415072344103:web:25ab5babeb023c89a11602",
-            databaseURL: "https://eid-salami-quiz-default-rtdb.firebaseio.com" // এটি আপনার প্রজেক্টের লিঙ্কের সাথে মিল রেখে বসানো হয়েছে
+            databaseURL: "https://eid-salami-quiz-default-rtdb.firebaseio.com"
         };
 
         firebase.initializeApp(firebaseConfig);
@@ -192,7 +195,7 @@
                     <div class="share-box">${link}</div>
                     <div style="display:flex; justify-content:center;">${generateStoneBtn("লিঙ্ক কপি করুন", `copyLink('${link}')`)}</div>
                 `;
-            });
+            }).catch(e => { alert("সেভ হতে সমস্যা হয়েছে! রুলস চেক করুন।"); console.error(e); });
         }
 
         function startQuiz(id) {
