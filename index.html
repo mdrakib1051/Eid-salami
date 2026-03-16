@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Eid Salami Quiz Pro | Md Rakib</title>
+    <title>Eid Salami Quiz Pro</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     
@@ -13,11 +13,10 @@
     <style>
         :root {
             --bg: #09090b;
-            --accent: #00f2ff;
+            --accent: #acf7ff;
             --stone-50: #fafaf9;
             --stone-800: #292524;
             --yellow-400: #facc15;
-            --gold: #ffcc00;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -27,137 +26,110 @@
             color: #fff;
             font-family: 'Hind Siliguri', sans-serif;
             margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; overflow: hidden;
         }
 
         .app-container {
-            width: 95%;
-            max-width: 420px;
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
+            width: 95%; max-width: 420px; height: 90vh;
+            display: flex; flex-direction: column;
             background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0) 100%);
-            border-radius: 30px;
-            padding: 25px;
-            position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border-radius: 30px; padding: 25px; position: relative;
         }
 
-        /* Messenger Bubble */
-        .bubble {
-            background: linear-gradient(145deg, #1f1f23, #18181b);
-            padding: 20px;
-            border-radius: 22px 22px 22px 5px;
-            font-size: 1.25rem;
-            margin-bottom: 25px;
-            border: 1px solid rgba(255,255,255,0.08);
+        /* --- QUESTION BOX (Gradient Style) --- */
+        .q-box {
+            position: relative; width: 100%; margin-bottom: 30px;
             animation: slideUp 0.4s ease;
         }
 
-        /* --- OPTION BUTTON CSS (Gradient Style) --- */
-        .opt-button {
-            position: relative;
-            background: transparent;
-            border: none;
-            padding: 0;
-            outline: none;
-            cursor: pointer;
-            width: 100%;
-            margin-bottom: 12px;
+        .q-front {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px; border-radius: 12px; font-size: 1.3rem; font-weight: 600;
+            color: white; background: linear-gradient(to right, #f27121, #e94057, #8a2387);
+            box-shadow: 0 10px 20px rgba(233, 64, 87, 0.3);
         }
 
-        .opt-shadow {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.25);
-            border-radius: 12px;
-            transform: translateY(2px);
-            transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+        /* --- OPTION BUTTON (Cyber Style) --- */
+        .opt-btn {
+            min-height: 55px; width: 100%; display: flex; align-items: center;
+            justify-content: flex-start; padding-left: 25px; position: relative;
+            cursor: pointer; border: 2px solid #acf7ff; color: #ffffff;
+            font-size: 1.1rem; font-weight: 600; margin-bottom: 15px;
+            background: linear-gradient(90deg, rgba(110, 239, 255, 0.4) -12.74%, rgba(106, 224, 255, 0.1) 56.76%);
+            transition: 0.2s;
         }
 
-        .opt-edge {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            border-radius: 12px;
-            background: linear-gradient(to left, hsl(217, 33%, 16%) 0%, hsl(217, 33%, 32%) 50%, hsl(217, 33%, 16%) 100%);
+        .opt-btn:before {
+            content: ""; width: 4px; height: 28px; background: #19173b;
+            border: 2px solid #acf7ff; transform: rotate(-45deg);
+            position: absolute; border-top: 0; border-left: 0; border-bottom: 0;
+            bottom: -8px; left: 4px; border-bottom-left-radius: 10px;
         }
 
-        .opt-front {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-            padding: 14px 20px;
-            border-radius: 12px;
-            font-size: 1.15rem;
-            color: white;
-            background: linear-gradient(to right, #f27121, #e94057, #8a2387);
-            transform: translateY(-4px);
-            transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1), filter 250ms;
+        .opt-btn:after {
+            content: ""; position: absolute; left: -2px; bottom: -2px;
+            border-top: 15px solid transparent; border-left: 15px solid #fffcf7;
         }
 
-        .opt-button:hover .opt-shadow { transform: translateY(4px); }
-        .opt-button:hover .opt-front { transform: translateY(-6px); filter: brightness(110%); }
-        .opt-button:active .opt-shadow { transform: translateY(1px); }
-        .opt-button:active .opt-front { transform: translateY(-2px); }
-
-        .opt-button.selected .opt-front {
-            background: linear-gradient(to right, #00f2ff, #0060ff);
+        .opt-btn.selected {
+            background: rgba(172, 247, 255, 0.4);
+            box-shadow: 0 0 15px rgba(172, 247, 255, 0.3);
+            border-color: #fff;
         }
 
-        /* --- ACTION BUTTON CSS (Stone Style) --- */
-        .button-wrapper { display: flex; justify-content: center; margin-top: auto; padding-top: 20px; }
+        /* --- NEXT BUTTON (Stone Style) --- */
+        .button-wrapper { display: flex; justify-content: center; margin-top: auto; }
         .button {
-            font-family: inherit; cursor: pointer; position: relative;
-            display: inline-flex; align-items: center; justify-content: center;
-            font-weight: bold; font-size: 1.1rem; border-radius: 1rem;
-            color: var(--stone-50); background: transparent; border: none;
+            cursor: pointer; position: relative; display: inline-flex; 
+            align-items: center; justify-content: center; border: none; background: none;
         }
-        .button::before {
-            content: ""; position: absolute; z-index: 0; height: 180%; aspect-ratio: 1;
-            background: white; clip-path: polygon(100% 50%, 91.48% 56.57%, 97.55% 65.45%, 87.42% 69.07%, 90.45% 79.39%, 79.7% 79.7%, 79.39% 90.45%, 69.07% 87.42%, 65.45% 97.55%, 56.57% 91.48%, 50% 100%, 43.43% 91.48%, 34.55% 97.55%, 30.93% 87.42%, 20.61% 90.45%, 20.3% 79.7%, 9.55% 79.39%, 12.58% 69.07%, 2.45% 65.45%, 8.52% 56.57%, 0% 50%, 8.52% 43.43%, 2.45% 34.55%, 12.58% 30.93%, 9.55% 20.61%, 20.3% 20.3%, 20.61% 9.55%, 30.93% 12.58%, 34.55% 2.45%, 43.43% 8.52%, 50% 0%, 56.57% 8.52%, 65.45% 2.45%, 69.07% 12.58%, 79.39% 9.55%, 79.7% 20.3%, 90.45% 20.61%, 87.42% 30.93%, 97.55% 34.55%, 91.48% 43.43%);
-            animation: star-rotate 4s linear infinite; opacity: 0.1;
+        .button > div { 
+            padding: 3px; border-radius: 1rem; background-color: var(--yellow-400); 
+            transform: translate(-4px, -4px); transition: 0.2s; 
+            box-shadow: 3px 3px 0 0 var(--yellow-400), 0 0 0 2px var(--stone-800); 
         }
-        .button > div { padding: 3px; border-radius: 1rem; background-color: var(--yellow-400); transform: translate(-4px, -4px); transition: 0.2s; box-shadow: 3px 3px 0 0 var(--yellow-400), 0 0 0 2px var(--stone-800); }
-        .button:active > div { transform: translate(0, 0); box-shadow: 0 0 0 0 var(--yellow-400), 0 0 0 2px var(--stone-800); }
-        .button > div > div { position: relative; border-radius: calc(1rem - 2.5px); background-color: var(--stone-800); padding: 12px 28px; }
-
-        @keyframes star-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .button:active > div { transform: translate(0, 0); box-shadow: none; }
+        .button > div > div { 
+            background-color: var(--stone-800); border-radius: calc(1rem - 2px); 
+            padding: 12px 30px; color: #fff; font-weight: bold; font-size: 1.1rem;
+        }
 
         .hidden { display: none; }
-        .score-display { font-size: 3.5rem; color: var(--gold); text-align: center; font-weight: 700; margin: 20px 0; }
-        .share-box { background: #1a1a1c; padding: 15px; border-radius: 10px; word-break: break-all; border: 1px dashed var(--accent); margin: 20px 0; }
+        .score-display { font-size: 3.5rem; color: var(--yellow-400); text-align: center; font-weight: 700; margin: 20px 0; }
+        .share-box { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; word-break: break-all; border: 1px dashed var(--accent); margin: 20px 0; }
+        
+        @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
     <div class="app-container" id="app">
-        <div id="screen-home" style="text-align: center;">
-            <h1 style="color:var(--accent); font-size: 2.5rem;">Eid Salami🌙</h1>
-            <p style="opacity:0.8;">১০টি প্রশ্নের উত্তর দাও আর জিতে নাও সালামি!</p>
-            <div id="home-btns" style="margin-top: 60px; display: flex; flex-direction: column; align-items: center; gap: 25px;"></div>
+        <div id="screen-home" style="text-align: center; margin-top: 50px;">
+            <h1 style="color:var(--accent); font-size: 2.5rem; margin-bottom: 10px;">Eid Salami🌙</h1>
+            <p style="opacity:0.8; margin-bottom: 60px;">সালামি জিততে সঠিক উত্তর দিন!</p>
+            <div id="home-btns"></div>
         </div>
 
         <div id="screen-main" class="hidden">
-            <div id="progress-text" style="color:var(--accent); font-size:0.95rem; font-weight: bold; margin-bottom:8px;"></div>
-            <div class="bubble" id="display-q"></div>
+            <div id="progress-text" style="color:var(--accent); font-size:0.9rem; margin-bottom:10px; font-weight: bold;"></div>
+            
+            <div class="q-box">
+                <div class="q-front" id="display-q"></div>
+            </div>
+
             <div id="options-container"></div>
+            
             <div id="action-btn-area" class="button-wrapper"></div>
         </div>
 
         <div id="screen-final" class="hidden">
-            <h1 style="text-align: center;">ফলাফল 🎉</h1>
+            <h1 style="text-align: center; color: var(--accent);">Result 🎉</h1>
             <div id="final-body"></div>
         </div>
     </div>
 
     <script>
-        // --- ফায়ারবেস কনফিগারেশন (আপনার তথ্য দিন) ---
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -171,14 +143,14 @@
 
         const readyQuestions = [
             { q: "আমার প্রিয় খাবার কোনটি?", opts: ["বিরিয়ানি", "কাচ্চি", "ফুচকা", "বার্গার"] },
-            { q: "আমি ফ্রি সময়ে কি করি?", opts: ["মুভি দেখা", "কোডিং", "ঘুমানো", "ঘুরতে যাওয়া"] },
+            { q: "আমি ফ্রি সময়ে কি করি?", opts: ["মুভি দেখি", "কোডিং করি", "ঘুমাই", "ঘুরতে যাই"] },
             { q: "আমার প্রিয় ঋতু কোনটি?", opts: ["শীত", "বর্ষা", "বসন্ত", "শরৎ"] },
-            { q: "চা নাকি কফি বেশি পছন্দ?", opts: ["দুধ চা", "রঙ চা", "কফি", "কোক"] },
-            { q: "আমার ড্রিম ট্যুর কোথায়?", opts: ["সাজেক", "কক্সবাজার", "সিলেট", "বান্দরবান"] },
+            { q: "চা নাকি কফি?", opts: ["দুধ চা", "রঙ চা", "কফি", "কোক"] },
+            { q: "আমার প্রিয় রঙ কোনটি?", opts: ["কালো", "নীল", "সাদা", "লাল"] },
+            { q: "ড্রিম ট্যুর কোথায়?", opts: ["সাজেক", "কক্সবাজার", "সিলেট", "বান্দরবান"] },
             { q: "আমি রাত জাগি নাকি সকালে উঠি?", opts: ["রাত জাগা পাখি", "খুব ভোরে উঠি", "ঠিক নেই", "সারাদিন ঘুমাই"] },
-            { q: "আমার প্রিয় রঙের নাম কি?", opts: ["কালো", "নীল", "সাদা", "লাল"] },
-            { q: "ফেভারিট গেম কোনটি?", opts: ["PUBG/FF", "Cricket", "Football", "Ludo"] },
-            { q: "আমি কার্টুন দেখি?", opts: ["হ্যাঁ অনেক", "মাঝেমাঝে", "একদম না", "আগে দেখতাম"] },
+            { q: "প্রিয় খেলা কোনটি?", opts: ["PUBG/FF", "Cricket", "Football", "Ludo"] },
+            { q: "আমি কি কার্টুন দেখি?", opts: ["হ্যাঁ অনেক", "মাঝেমাঝে", "একদম না", "আগে দেখতাম"] },
             { q: "আমাকে তোমার কেমন মনে হয়?", opts: ["খুব ভালো", "রাগী", "রহস্যময়", "পাগল"] }
         ];
 
@@ -196,7 +168,7 @@
             if(quizId) {
                 homeBtns.innerHTML = generateStoneBtn("কুইজ খেলুন", `startQuiz('${quizId}')`);
             } else {
-                homeBtns.innerHTML = generateStoneBtn("নিজের কুইজ তৈরি করো", "startCreate()");
+                homeBtns.innerHTML = generateStoneBtn("কুইজ তৈরি করো", "startCreate()");
             }
         }
 
@@ -212,33 +184,26 @@
 
         function renderStep() {
             const data = readyQuestions[currentIndex];
-            document.getElementById('progress-text').innerText = `সেটআপ: প্রশ্ন ${currentIndex + 1}/১০`;
+            document.getElementById('progress-text').innerText = `সেটআপ: ${currentIndex + 1}/১০`;
             document.getElementById('display-q').innerText = data.q;
             
             let optsHtml = "";
             data.opts.forEach((o, i) => {
-                optsHtml += `
-                <div class="opt-button" id="opt-${i}" onclick="selectOpt(${i})">
-                    <span class="opt-shadow"></span><span class="opt-edge"></span>
-                    <div class="opt-front"><span>${o}</span>
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </div>
-                </div>`;
+                optsHtml += `<div class="opt-btn" id="opt-${i}" onclick="selectOpt(${i})">${o}</div>`;
             });
             document.getElementById('options-container').innerHTML = optsHtml;
-            document.getElementById('action-btn-area').innerHTML = generateStoneBtn("পরবর্তী প্রশ্ন", "handleNext()");
+            document.getElementById('action-btn-area').innerHTML = generateStoneBtn("পরবর্তী", "handleNext()");
             selectedAns = null;
         }
 
         function selectOpt(idx) {
-            document.querySelectorAll('.opt-button').forEach(btn => btn.classList.remove('selected'));
-            const target = document.getElementById(`opt-${idx}`);
-            if(target) target.classList.add('selected');
+            document.querySelectorAll('.opt-btn').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById(`opt-${idx}`).classList.add('selected');
             selectedAns = idx;
         }
 
         function handleNext() {
-            if(selectedAns === null) return alert("একটি উত্তর সিলেক্ট করো!");
+            if(selectedAns === null) return alert("উত্তর সিলেক্ট করো!");
             if(mode === 'create') {
                 quizData.push({ q: readyQuestions[currentIndex].q, opts: readyQuestions[currentIndex].opts, ans: selectedAns });
                 if(currentIndex < 9) { currentIndex++; renderStep(); } 
@@ -251,13 +216,13 @@
         }
 
         function saveQuiz() {
-            const id = "eid" + Math.floor(Math.random() * 899999 + 100000);
-            document.getElementById('action-btn-area').innerHTML = "<p>সেভ হচ্ছে...</p>";
+            const id = "rakib" + Math.floor(Math.random() * 900000);
+            document.getElementById('action-btn-area').innerHTML = "<p>Saving...</p>";
             db.ref('quizzes/' + id).set({ questions: quizData }).then(() => {
                 showScreen('screen-final');
                 const link = window.location.origin + window.location.pathname + "?id=" + id;
                 document.getElementById('final-body').innerHTML = `
-                    <p style="text-align:center;">লিঙ্কটি কপি করে বন্ধুদের পাঠান:</p>
+                    <p style="text-align:center;">লিঙ্কটি বন্ধুদের পাঠান:</p>
                     <div class="share-box">${link}</div>
                     <div style="display:flex; justify-content:center;">${generateStoneBtn("লিঙ্ক কপি করুন", `copyLink('${link}')`)}</div>
                 `;
@@ -271,37 +236,30 @@
                     quizData = snap.val().questions;
                     showScreen('screen-main');
                     renderPlayStep();
-                } else { alert("কুইজ পাওয়া যায়নি!"); }
+                } else { alert("Error!"); }
             });
         }
 
         function renderPlayStep() {
             const data = quizData[currentIndex];
-            document.getElementById('progress-text').innerText = `প্রশ্ন ${currentIndex + 1}/${quizData.length}`;
+            document.getElementById('progress-text').innerText = `প্রশ্ন: ${currentIndex + 1}/${quizData.length}`;
             document.getElementById('display-q').innerText = data.q;
             let optsHtml = "";
             data.opts.forEach((o, i) => {
-                optsHtml += `
-                <div class="opt-button" id="opt-${i}" onclick="selectOpt(${i})">
-                    <span class="opt-shadow"></span><span class="opt-edge"></span>
-                    <div class="opt-front"><span>${o}</span>
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </div>
-                </div>`;
+                optsHtml += `<div class="opt-btn" id="opt-${i}" onclick="selectOpt(${i})">${o}</div>`;
             });
             document.getElementById('options-container').innerHTML = optsHtml;
-            document.getElementById('action-btn-area').innerHTML = generateStoneBtn("পরবর্তী", "handleNext()");
+            document.getElementById('action-btn-area').innerHTML = generateStoneBtn("সাবমিট", "handleNext()");
             selectedAns = null;
         }
 
         function showFinalResult() {
             showScreen('screen-final');
             document.getElementById('final-body').innerHTML = `
-                <div class="bubble">অভিনন্দন! তোমার সালামি হচ্ছে:</div>
                 <div class="score-display">৳${score * 100}</div>
-                <p style="text-align:center;">সঠিক উত্তর: ${score}/${quizData.length}</p>
-                <div style="display:flex; justify-content:center; margin-top:30px;">
-                    ${generateStoneBtn("নিজের কুইজ বানাও", "location.href=window.location.pathname")}
+                <p style="text-align:center;">আপনার সালামি জমা হয়েছে!</p>
+                <div style="display:flex; justify-content:center; margin-top:40px;">
+                    ${generateStoneBtn("হোমে ফিরুন", "location.href=window.location.pathname")}
                 </div>
             `;
         }
