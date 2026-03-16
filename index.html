@@ -5,18 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Eid Salami Quiz Pro</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Rubik:wght@700&display=swap" rel="stylesheet">
     
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
     <style>
         :root {
-            --bg: #0c0c0e;
+            --bg: #09090b;
             --accent: #00f2ff;
-            --glass: rgba(255, 255, 255, 0.08);
+            --glass: rgba(255, 255, 255, 0.05);
+            --stone-50: #fafaf9;
+            --stone-800: #292524;
+            --yellow-400: #facc15;
             --gold: #ffcc00;
-            --text-p: #e0e0e0;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -30,7 +32,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            font-size: 18px; /* Medium Font Size for Mobile */
+            overflow: hidden;
         }
 
         .app-container {
@@ -46,106 +48,90 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        h1 { font-size: 2.2rem; color: var(--accent); text-align: center; margin-bottom: 10px; }
-        p { color: var(--text-p); text-align: center; font-size: 1.1rem; }
-
-        /* Ready-made Question Card */
-        .q-card {
-            background: var(--glass);
-            border: 1px solid rgba(255,255,255,0.1);
+        /* Messenger Bubble Animation */
+        .bubble {
+            background: linear-gradient(145deg, #1f1f23, #18181b);
             padding: 20px;
-            border-radius: 20px;
-            margin-top: 20px;
-            animation: fadeIn 0.5s ease;
+            border-radius: 22px 22px 22px 5px;
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.08);
+            animation: slideUp 0.4s ease;
         }
 
-        .q-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 15px; color: var(--accent); }
-
-        /* Options */
-        .opt-grid { display: grid; gap: 12px; }
-        
+        /* Option Item Design */
         .opt-item {
             background: rgba(255,255,255,0.05);
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid transparent;
+            padding: 16px;
+            border-radius: 16px;
+            border: 2px solid transparent;
             cursor: pointer;
+            margin-bottom: 12px;
             transition: 0.3s;
-            display: flex;
-            align-items: center;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
         }
 
         .opt-item.selected {
-            background: rgba(0, 242, 255, 0.15);
-            border-color: var(--accent);
-            color: var(--accent);
+            border-color: var(--yellow-400);
+            background: rgba(250, 204, 21, 0.1);
+            color: var(--yellow-400);
         }
 
-        /* Fixed Footer Button */
-        .footer-btn {
-            background: var(--accent);
-            color: #000;
-            padding: 18px;
-            border-radius: 15px;
-            font-weight: 700;
-            text-align: center;
-            margin-top: auto;
-            cursor: pointer;
-            font-size: 1.2rem;
-            box-shadow: 0 10px 20px rgba(0, 242, 255, 0.2);
+        /* --- PREMIUM BUTTON CSS (Uiverse.io) --- */
+        .button-wrapper { display: flex; justify-content: center; margin-top: auto; padding-top: 20px; }
+        
+        .button {
+            --stone-50: #fafaf9; --stone-800: #292524; --yellow-400: #facc15;
+            font-family: "Hind Siliguri", sans-serif; cursor: pointer; position: relative;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-weight: bold; line-height: 1; font-size: 1.1rem; border-radius: 1rem;
+            outline: 2px solid transparent; color: var(--stone-50); background: transparent; border: none;
         }
+
+        .button::before {
+            content: ""; position: absolute; z-index: 0; height: 180%; aspect-ratio: 1;
+            background: white; clip-path: polygon(100% 50%, 91.48% 56.57%, 97.55% 65.45%, 87.42% 69.07%, 90.45% 79.39%, 79.7% 79.7%, 79.39% 90.45%, 69.07% 87.42%, 65.45% 97.55%, 56.57% 91.48%, 50% 100%, 43.43% 91.48%, 34.55% 97.55%, 30.93% 87.42%, 20.61% 90.45%, 20.3% 79.7%, 9.55% 79.39%, 12.58% 69.07%, 2.45% 65.45%, 8.52% 56.57%, 0% 50%, 8.52% 43.43%, 2.45% 34.55%, 12.58% 30.93%, 9.55% 20.61%, 20.3% 20.3%, 20.61% 9.55%, 30.93% 12.58%, 34.55% 2.45%, 43.43% 8.52%, 50% 0%, 56.57% 8.52%, 65.45% 2.45%, 69.07% 12.58%, 79.39% 9.55%, 79.7% 20.3%, 90.45% 20.61%, 87.42% 30.93%, 97.55% 34.55%, 91.48% 43.43%);
+            animation: star-rotate 4s linear infinite; opacity: 0.1; transition: 0.3s;
+        }
+        .button:hover::before { opacity: 0.8; }
+        .button > div { padding: 3px; border-radius: 1rem; background-color: var(--yellow-400); transform: translate(-4px, -4px); transition: 0.2s; box-shadow: 3px 3px 0 0 var(--yellow-400), 0 0 0 2px var(--stone-800); }
+        .button:hover > div { transform: translate(0, 0); box-shadow: 0 0 0 0 var(--yellow-400), 0 0 0 2px var(--stone-800); }
+        .button > div > div { position: relative; border-radius: calc(1rem - 2px); background-color: var(--stone-800); overflow: hidden; }
+        .button > div > div > div { position: relative; display: flex; align-items: center; padding: 1rem 1.8rem; filter: drop-shadow(0 -1px 0 var(--stone-800)); }
+        
+        @keyframes star-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .hidden { display: none; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .share-box {
-            background: #1a1a1c;
-            padding: 15px;
-            border-radius: 10px;
-            word-break: break-all;
-            margin: 20px 0;
-            border: 1px dashed var(--accent);
-        }
+        .score-display { font-size: 3.5rem; color: var(--gold); text-align: center; font-weight: 700; margin: 20px 0; }
+        .share-box { background: #1a1a1c; padding: 15px; border-radius: 10px; word-break: break-all; border: 1px dashed var(--accent); margin: 20px 0; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
-    <div class="app-container" id="main-app">
-        
-        <div id="screen-start">
-            <h1>Eid Salami🌙</h1>
-            <p>আপনার বন্ধুদের জন্য একটি দারুণ কুইজ চ্যালেঞ্জ তৈরি করুন!</p>
-            <div style="margin-top: 50px;" class="footer-btn" onclick="startSetup()">কুইজ সেটআপ শুরু করুন</div>
-        </div>
-
-        <div id="screen-setup" class="hidden">
-            <div id="setup-content">
-                <div class="q-card">
-                    <div id="step-label" style="font-size: 0.9rem; color: var(--accent); margin-bottom: 5px;">প্রশ্ন ১/১০</div>
-                    <div id="current-q-text" class="q-title">আপনার প্রিয় খাবার কোনটি?</div>
-                    <div class="opt-grid" id="opt-list">
-                        </div>
+    <div class="app-container" id="app">
+        <div id="screen-home">
+            <h1 style="color:var(--accent); text-align:center;">Eid Salami🌙</h1>
+            <p style="text-align:center; opacity:0.8;">১০টি প্রশ্নের উত্তর দাও আর জিতে নাও সালামি!</p>
+            <div id="home-btns" style="margin-top: 50px; display: flex; flex-direction: column; align-items: center; gap: 20px;">
                 </div>
-            </div>
-            <div class="footer-btn" onclick="nextSetupStep()" id="next-btn">পরবর্তী প্রশ্ন</div>
         </div>
 
-        <div id="screen-link" class="hidden">
-            <h1>অভিনন্দন! 🎉</h1>
-            <p>আপনার কুইজটি সফলভাবে তৈরি হয়েছে। নিচের লিঙ্কটি কপি করে বন্ধুদের পাঠান:</p>
-            <div class="share-box" id="share-url">Coping link...</div>
-            <div class="footer-btn" onclick="copyLink()">লিঙ্ক কপি করুন</div>
+        <div id="screen-main" class="hidden">
+            <div id="progress-text" style="color:var(--accent); font-size:0.9rem; margin-bottom:5px;">প্রক্রিয়া চলছে...</div>
+            <div class="bubble" id="display-q">লোডিং...</div>
+            <div id="options-container"></div>
+            <div id="action-btn-area" class="button-wrapper"></div>
         </div>
 
+        <div id="screen-final" class="hidden">
+            <h1 id="final-title">অভিনন্দন! 🎉</h1>
+            <div id="final-body"></div>
+        </div>
     </div>
 
     <script>
-        // Firebase Config (Replace with yours)
+        // --- ফায়ারবেস কনফিগারেশন (Fill this up) ---
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -157,86 +143,145 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // Ready-made Questions
+        // রেডিমেড প্রশ্ন সেট
         const readyQuestions = [
             { q: "আমার প্রিয় খাবার কোনটি?", opts: ["বিরিয়ানি", "কাচ্চি", "ফুচকা", "বার্গার"] },
-            { q: "আমি ফ্রি সময়ে কি করতে পছন্দ করি?", opts: ["মুভি দেখা", "কোডিং", "ঘুমানো", "ঘুরতে যাওয়া"] },
+            { q: "আমি ফ্রি সময়ে কি করি?", opts: ["মুভি দেখি", "কোডিং করি", "ঘুমাই", "ঘুরতে যাই"] },
             { q: "আমার প্রিয় ঋতু কোনটি?", opts: ["শীত", "বর্ষা", "বসন্ত", "শরৎ"] },
-            { q: "আমি চা নাকি কফি বেশি পছন্দ করি?", opts: ["দুধ চা", "রঙ চা", "কফি", "কোক"] },
-            { q: "আমার ড্রিম ট্যুর কোথায় হতে পারে?", opts: ["সাজেক", "কক্সবাজার", "সিলেট", "বান্দরবান"] },
+            { q: "দুধ চা নাকি কফি?", opts: ["দুধ চা", "রঙ চা", "কফি", "কোক"] },
+            { q: "আমার ড্রিম ট্যুর কোথায়?", opts: ["সাজেক", "কক্সবাজার", "সিলেট", "বান্দরবান"] },
             { q: "আমি রাত জাগি নাকি সকালে উঠি?", opts: ["রাত জাগা পাখি", "খুব ভোরে উঠি", "ঠিক নেই", "সারাদিন ঘুমাই"] },
-            { q: "আমার প্রিয় রঙের নাম কি?", opts: ["কালো", "নীল", "সাদা", "লাল"] },
-            { q: "আমার ফেভারিট গেম কোনটি?", opts: ["PUBG/FF", "Cricket", "Football", "Ludo"] },
-            { q: "আমি কার্টুন দেখতে পছন্দ করি?", opts: ["হ্যাঁ অনেক", "উমম মাঝেমাঝে", "একদম না", "আগে দেখতাম"] },
+            { q: "আমার প্রিয় রঙের নাম?", opts: ["কালো", "নীল", "সাদা", "লাল"] },
+            { q: "আমার প্রিয় খেলা কোনটি?", opts: ["PUBG/FF", "Cricket", "Football", "Ludo"] },
+            { q: "আমি কার্টুন দেখি?", opts: ["হ্যাঁ অনেক", "মাঝেমাঝে", "একদম না", "আগে দেখতাম"] },
             { q: "আমাকে তোমার কেমন মনে হয়?", opts: ["খুব ভালো", "রাগী", "রহস্যময়", "পাগল"] }
         ];
 
-        let setupIndex = 0;
-        let finalQuizData = [];
+        let quizData = [];
+        let currentIndex = 0;
         let selectedAns = null;
+        let score = 0;
+        let mode = 'play'; // 'create' or 'play'
 
-        function startSetup() {
-            document.getElementById('screen-start').classList.add('hidden');
-            document.getElementById('screen-setup').classList.remove('hidden');
-            renderSetupQuestion();
+        function init() {
+            const params = new URLSearchParams(window.location.search);
+            const quizId = params.get('id');
+            
+            let homeHtml = "";
+            if(quizId) {
+                homeHtml = generateButton("কুইজ খেলুন", `startQuiz('${quizId}')`);
+            } else {
+                homeHtml = generateButton("নিজের কুইজ তৈরি করো", "startCreate()");
+            }
+            document.getElementById('home-btns').innerHTML = homeHtml;
         }
 
-        function renderSetupQuestion() {
-            const data = readyQuestions[setupIndex];
-            document.getElementById('step-label').innerText = `প্রশ্ন ${setupIndex + 1}/১০`;
-            document.getElementById('current-q-text').innerText = data.q;
+        function generateButton(text, clickFn) {
+            return `
+            <button class="button" onclick="${clickFn}">
+                <div><div><div>${text}</div></div></div>
+            </button>`;
+        }
+
+        function startCreate() {
+            mode = 'create';
+            showScreen('screen-main');
+            renderStep();
+        }
+
+        function renderStep() {
+            const data = readyQuestions[currentIndex];
+            document.getElementById('progress-text').innerText = `প্রশ্ন ${currentIndex + 1}/১০`;
+            document.getElementById('display-q').innerText = data.q;
             
-            let html = "";
+            let optsHtml = "";
             data.opts.forEach((o, i) => {
-                html += `<div class="opt-item" onclick="selectOpt(${i}, this)">${o}</div>`;
+                optsHtml += `<div class="opt-item" onclick="selectOpt(${i}, this)">${o}</div>`;
             });
-            document.getElementById('opt-list').innerHTML = html;
+            document.getElementById('options-container').innerHTML = optsHtml;
+            document.getElementById('action-btn-area').innerHTML = generateButton("পরবর্তী প্রশ্ন", "handleNext()");
             selectedAns = null;
         }
 
         function selectOpt(idx, el) {
-            document.querySelectorAll('.opt-item').forEach(item => item.classList.remove('selected'));
+            document.querySelectorAll('.opt-item').forEach(i => i.classList.remove('selected'));
             el.classList.add('selected');
             selectedAns = idx;
         }
 
-        function nextSetupStep() {
-            if(selectedAns === null) return alert("একটি উত্তর সিলেক্ট করুন!");
+        function handleNext() {
+            if(selectedAns === null) return alert("একটি উত্তর সিলেক্ট করো!");
 
-            finalQuizData.push({
-                q: readyQuestions[setupIndex].q,
-                opts: readyQuestions[setupIndex].opts,
-                ans: selectedAns
-            });
-
-            if(setupIndex < 9) {
-                setupIndex++;
-                renderSetupQuestion();
+            if(mode === 'create') {
+                quizData.push({ q: readyQuestions[currentIndex].q, opts: readyQuestions[currentIndex].opts, ans: selectedAns });
+                if(currentIndex < 9) { currentIndex++; renderStep(); } 
+                else { saveQuiz(); }
             } else {
-                saveToFirebase();
+                if(selectedAns === quizData[currentIndex].ans) score++;
+                if(currentIndex < quizData.length - 1) { currentIndex++; renderPlayStep(); }
+                else { showFinalResult(); }
             }
         }
 
-        function saveToFirebase() {
-            const quizID = "eid" + Math.floor(Math.random() * 899999 + 100000);
-            document.getElementById('next-btn').innerText = "সেভ হচ্ছে...";
-            
-            db.ref('quizzes/' + quizID).set({
-                questions: finalQuizData,
-                timestamp: Date.now()
-            }).then(() => {
-                document.getElementById('screen-setup').classList.add('hidden');
-                document.getElementById('screen-link').classList.remove('hidden');
-                const url = window.location.href.split('?')[0] + "?id=" + quizID;
-                document.getElementById('share-url').innerText = url;
+        function saveQuiz() {
+            const id = "eid" + Math.floor(Math.random() * 899999 + 100000);
+            document.getElementById('action-btn-area').innerHTML = "<p>সেভ হচ্ছে...</p>";
+            db.ref('quizzes/' + id).set({ questions: quizData }).then(() => {
+                showScreen('screen-final');
+                const link = window.location.origin + window.location.pathname + "?id=" + id;
+                document.getElementById('final-body').innerHTML = `
+                    <p>আপনার কুইজ রেডি! নিচের লিঙ্কটি বন্ধুদের পাঠান:</p>
+                    <div class="share-box">${link}</div>
+                    ${generateButton("লিঙ্ক কপি করুন", `copyLink('${link}')`)}
+                `;
             });
         }
 
-        function copyLink() {
-            const text = document.getElementById('share-url').innerText;
-            navigator.clipboard.writeText(text);
-            alert("লিঙ্ক কপি হয়েছে! বন্ধুদের পাঠিয়ে দাও।");
+        function startQuiz(id) {
+            mode = 'play';
+            db.ref('quizzes/' + id).once('value', snap => {
+                if(snap.exists()) {
+                    quizData = snap.val().questions;
+                    showScreen('screen-main');
+                    renderPlayStep();
+                } else { alert("কুইজ পাওয়া যায়নি!"); }
+            });
         }
+
+        function renderPlayStep() {
+            const data = quizData[currentIndex];
+            document.getElementById('progress-text').innerText = `প্রশ্ন ${currentIndex + 1}/${quizData.length}`;
+            document.getElementById('display-q').innerText = data.q;
+            let optsHtml = "";
+            data.opts.forEach((o, i) => {
+                optsHtml += `<div class="opt-item" onclick="selectOpt(${i}, this)">${o}</div>`;
+            });
+            document.getElementById('options-container').innerHTML = optsHtml;
+            document.getElementById('action-btn-area').innerHTML = generateButton("পরবর্তী", "handleNext()");
+            selectedAns = null;
+        }
+
+        function showFinalResult() {
+            showScreen('screen-final');
+            document.getElementById('final-body').innerHTML = `
+                <div class="bubble">অভিনন্দন! তোমার সালামি হচ্ছে:</div>
+                <div class="score-display">৳${score * 100}</div>
+                <p>সঠিক উত্তর: ${score}/${quizData.length}</p>
+                ${generateButton("নিজের কুইজ বানাও", "location.href=window.location.pathname")}
+            `;
+        }
+
+        function showScreen(id) {
+            document.querySelectorAll('.app-container > div').forEach(s => s.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function copyLink(txt) {
+            navigator.clipboard.writeText(txt);
+            alert("কপি হয়েছে!");
+        }
+
+        init();
     </script>
 </body>
 </html>
