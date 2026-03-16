@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Eid Salami Quiz Pro</title>
+    <title>Eid Salami Quiz Pro | Rakib</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
@@ -15,6 +15,7 @@
             --accent: #acf7ff;
             --stone-800: #292524;
             --yellow-400: #facc15;
+            --cyber-blue: #acf7ff;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -36,75 +37,105 @@
             border: 1px solid rgba(172, 247, 255, 0.1);
         }
 
-        /* Animations */
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* --- Animations --- */
+        @keyframes star-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- QUESTION BOX (Spinning Star Design) --- */
+        .q-box-container {
+            display: flex; justify-content: center; margin-bottom: 30px;
+            animation: slideUp 0.6s ease-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* From Uiverse.io by augustin_4687 */
+        .spinning-q {
+            position: relative;
+            display: inline-flex;
+            align-items: center; justify-content: center;
+            font-weight: bold; font-size: 1.4rem; border-radius: 1rem;
+            color: #fff; background: transparent; border: none;
+            width: 100%;
         }
 
-        /* UI Elements */
-        .q-box { 
-            width: 100%; margin-bottom: 25px; 
-            animation: slideUp 0.6s ease-out forwards; 
+        .spinning-q::before {
+            content: ""; position: absolute; z-index: 0; height: 180%; aspect-ratio: 1;
+            background: white; clip-path: polygon(100% 50%, 91.48% 56.57%, 97.55% 65.45%, 87.42% 69.07%, 90.45% 79.39%, 79.7% 79.7%, 79.39% 90.45%, 69.07% 87.42%, 65.45% 97.55%, 56.57% 91.48%, 50% 100%, 43.43% 91.48%, 34.55% 97.55%, 30.93% 87.42%, 20.61% 90.45%, 20.3% 79.7%, 9.55% 79.39%, 12.58% 69.07%, 2.45% 65.45%, 8.52% 56.57%, 0% 50%, 8.52% 43.43%, 2.45% 34.55%, 12.58% 30.93%, 9.55% 20.61%, 20.3% 20.3%, 20.61% 9.55%, 30.93% 12.58%, 34.55% 2.45%, 43.43% 8.52%, 50% 0%, 56.57% 8.52%, 65.45% 2.45%, 69.07% 12.58%, 79.39% 9.55%, 79.7% 20.3%, 90.45% 20.61%, 87.42% 30.93%, 97.55% 34.55%, 91.48% 43.43%);
+            animation: star-rotate 5s linear infinite; opacity: 0.15;
+        }
+
+        .spinning-q > div { 
+            padding: 3px; border-radius: 1rem; background-color: #f27121; 
+            transform: translate(-4px, -4px); 
+            box-shadow: 3.5px 3.5px 0 0 #e94057, 0 0 0 2px var(--stone-800); 
+            position: relative; z-index: 1; width: 100%;
         }
         
-        .q-front {
-            padding: 22px; border-radius: 15px; font-size: 1.5rem; font-weight: 700;
+        .spinning-q > div > div { 
             background: linear-gradient(135deg, #f27121, #e94057, #8a2387);
-            box-shadow: 0 10px 25px rgba(233, 64, 87, 0.4); text-align: center;
+            border-radius: calc(1rem - 2px); padding: 20px; 
+            color: #fff; font-weight: 700; text-align: center;
         }
 
-        .opt-btn {
+        /* --- OPTION BUTTON (Broken Corner Design) --- */
+        /* From Uiverse.io by JsGrisales */
+        .opt-cyber-btn {
             min-height: 60px; width: 100%; display: flex; align-items: center;
-            padding: 0 25px; border: 2.5px solid var(--accent); color: #ffffff;
-            font-size: 1.25rem; font-weight: 600; margin-bottom: 12px;
-            background: rgba(172, 247, 255, 0.05); cursor: pointer; 
+            justify-content: flex-start; padding-left: 30px; position: relative;
+            cursor: pointer; border: 2px solid var(--cyber-blue); color: #ffffff;
+            font-size: 1.2rem; font-weight: 600; margin-bottom: 15px;
+            background: linear-gradient(90deg, rgba(110, 239, 255, 0.4) -12.74%, rgba(106, 224, 255, 0.1) 56.76%);
             transition: 0.3s;
             opacity: 0;
             animation: slideUp 0.4s ease-out forwards;
         }
 
-        .opt-btn.selected {
-            background: rgba(172, 247, 255, 0.3);
-            transform: scale(1.02);
+        .opt-cyber-btn:before {
+            content: ""; width: 4px; height: 28px; background: #19173b;
+            border: 2px solid var(--cyber-blue); transform: rotate(-45deg);
+            position: absolute; bottom: -8px; left: 4px; border-bottom-left-radius: 10px;
+        }
+
+        .opt-cyber-btn:after {
+            content: ""; position: absolute; left: -2px; bottom: -2px;
+            border-top: 15px solid transparent; border-left: 15px solid #fffcf7;
+        }
+
+        .opt-cyber-btn.selected {
+            background: rgba(172, 247, 255, 0.4);
+            box-shadow: 0 0 15px rgba(172, 247, 255, 0.3);
             border-color: #fff;
         }
 
-        /* Wish Card (Final Screen) */
+        /* --- Wish Card (Final Screen) --- */
         .card {
-            width: 100%; max-width: 300px; height: 350px; padding: 5px; margin: 15px auto;
+            width: 100%; max-width: 300px; height: 320px; padding: 5px; margin: 15px auto;
             background-image: linear-gradient(#ca1eb3, #FD2E24, #FFD701 70%);
-            border-radius: 15px; animation: slideUp 0.8s ease-out;
+            border-radius: 12px; animation: slideUp 0.8s ease-out;
         }
         
         .card__content {
             background-color: rgba(20, 20, 20, 0.95); backdrop-filter: blur(20px);
             width: 100%; height: 100%; padding: 20px; border-radius: 10px;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            position: relative; overflow: hidden;
         }
 
         .text-title { color: #fff; font-size: 1.8rem; font-weight: 800; margin: 0 0 15px 0; }
         .text-body { 
-            color: #ffcc00; text-align: center; font-size: 1.2rem; 
-            line-height: 1.6; font-weight: 600; min-height: 140px;
+            color: #ffcc00; text-align: center; font-size: 1.15rem; 
+            line-height: 1.6; font-weight: 600; min-height: 120px;
         }
 
-        /* Toast Popup */
+        /* --- Toast Popup --- */
         #custom-toast {
             position: fixed; top: 30px; background: #fff;
             padding: 12px 30px; border-radius: 50px; color: #000; font-weight: 800;
-            z-index: 9999; transform: translateY(-150px); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 9999; transform: translateY(-150px); transition: 0.5s;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         #custom-toast.show { transform: translateY(0); }
 
-        /* Premium Buttons */
+        /* --- NEXT BUTTON (Premium) --- */
         .button { cursor: pointer; position: relative; border: none; background: none; animation: fadeIn 1s; }
         .button > div { padding: 4px; border-radius: 1rem; background-color: var(--yellow-400); transform: translate(-4px, -4px); transition: 0.2s; box-shadow: 4px 4px 0 0 var(--yellow-400), 0 0 0 2px var(--stone-800); }
         .button:active > div { transform: translate(0, 0); box-shadow: none; }
@@ -120,8 +151,8 @@
 
     <div class="app-container" id="app">
         <div id="screen-home" style="text-align: center; margin-top: 50px;">
-            <h1 style="color:var(--accent); font-size: 3.2rem; margin-bottom: 0; animation: slideUp 0.6s;">Eid Salami🌙</h1>
-            <p style="opacity:0.8; font-size: 1.2rem; margin-bottom: 60px; animation: slideUp 0.8s;">সালামি জিততে সঠিক উত্তর দিন!</p>
+            <h1 style="color:var(--accent); font-size: 3.2rem; margin-bottom: 0;">Eid Salami🌙</h1>
+            <p style="opacity:0.8; font-size: 1.2rem; margin-bottom: 60px;">সালামি জিততে সঠিক উত্তর দিন!</p>
             <div id="home-btns"></div>
         </div>
 
@@ -138,7 +169,7 @@
     </div>
 
     <script>
-        // Firebase Configuration (Same)
+        // --- Firebase Configuration ---
         const firebaseConfig = {
             apiKey: "AIzaSyBTKGsT5CzPBbEGmqHfvkGPDHfIa8c6fQs",
             authDomain: "eid-salami-quiz.firebaseapp.com",
@@ -151,6 +182,7 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
+        // wishes array (Same)
         const wishes = [
             "দোস্ত, তুই সব সময় আমার পাশে থাকিস, এটাই বড় পাওয়া। তোর এবারের ঈদ কাটুক অনেক আনন্দে আর অনেক সালামি নিয়ে!",
             "তোর মত বন্ধু পাওয়া ভাগ্যের ব্যাপার। আশা করি আমাদের এই পাগলামি সারা জীবন থাকবে। ঈদ মোবারক আমার জান!",
@@ -169,6 +201,7 @@
             "সবশেষে এটাই বলব, তুই যেমন আছিস তেমনই থাকিস। তোর মত বন্ধু আর হয় না। শুভ ঈদ!"
         ];
 
+        // readyQuestions array (Same)
         const readyQuestions = [
             { q: "আমার প্রিয় খাবার কোনটি?", opts: ["বিরিয়ানি", "কাচ্চি", "ফুচকা", "বার্গার"] },
             { q: "আমি ফ্রি সময়ে কি করি?", opts: ["মুভি দেখি", "কোডিং করি", "ঘুমাই", "ঘুরতে যাই"] },
@@ -211,12 +244,17 @@
             const data = readyQuestions[currentIndex];
             document.getElementById('progress-text').innerText = `Step: ${currentIndex + 1}/10`;
             
-            // Question area with animation reset
-            document.getElementById('question-area').innerHTML = `<div class="q-box"><div class="q-front">${data.q}</div></div>`;
+            // Spinning Question Box
+            document.getElementById('question-area').innerHTML = `
+                <div class="q-box-container">
+                    <div class="spinning-q">
+                        <div><div>${data.q}</div></div>
+                    </div>
+                </div>`;
             
             let optsHtml = "";
             data.opts.forEach((o, i) => { 
-                optsHtml += `<div class="opt-btn" id="opt-${i}" style="animation-delay: ${0.2 + (i*0.1)}s" onclick="selectOpt(${i})">${o}</div>`; 
+                optsHtml += `<div class="opt-cyber-btn" id="opt-${i}" style="animation-delay: ${0.2 + (i*0.1)}s" onclick="selectOpt(${i})">${o}</div>`; 
             });
             document.getElementById('options-container').innerHTML = optsHtml;
             document.getElementById('action-btn-area').innerHTML = generateStoneBtn("পরবর্তী", "handleNext()");
@@ -224,7 +262,7 @@
         }
 
         function selectOpt(idx) {
-            document.querySelectorAll('.opt-btn').forEach(btn => btn.classList.remove('selected'));
+            document.querySelectorAll('.opt-cyber-btn').forEach(btn => btn.classList.remove('selected'));
             document.getElementById(`opt-${idx}`).classList.add('selected');
             selectedAns = idx;
         }
@@ -267,11 +305,18 @@
         function renderPlayStep() {
             const data = quizData[currentIndex];
             document.getElementById('progress-text').innerText = `প্রশ্ন: ${currentIndex + 1}/${quizData.length}`;
-            document.getElementById('question-area').innerHTML = `<div class="q-box"><div class="q-front">${data.q}</div></div>`;
+            
+            // Spinning Question Box
+            document.getElementById('question-area').innerHTML = `
+                <div class="q-box-container">
+                    <div class="spinning-q">
+                        <div><div>${data.q}</div></div>
+                    </div>
+                </div>`;
             
             let optsHtml = "";
             data.opts.forEach((o, i) => { 
-                optsHtml += `<div class="opt-btn" id="opt-${i}" style="animation-delay: ${0.2 + (i*0.1)}s" onclick="selectOpt(${i})">${o}</div>`; 
+                optsHtml += `<div class="opt-cyber-btn" id="opt-${i}" style="animation-delay: ${0.2 + (i*0.1)}s" onclick="selectOpt(${i})">${o}</div>`; 
             });
             document.getElementById('options-container').innerHTML = optsHtml;
             document.getElementById('action-btn-area').innerHTML = generateStoneBtn("সাবমিট", "handleNext()");
