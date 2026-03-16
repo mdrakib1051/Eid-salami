@@ -6,6 +6,7 @@
     <title>Eid Salami Quiz | Rakib</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+    
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
@@ -17,88 +18,357 @@
             --stone-800: #292524;
             --yellow-400: #facc15;
             --cyber-blue: #acf7ff;
+            --glass: rgba(255, 255, 255, 0.03);
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+        /* --- Global Reset --- */
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+            outline: none; 
+            margin: 0; 
+            padding: 0; 
+        }
 
         body {
             background-color: var(--bg);
             color: #fff;
             font-family: 'Hind Siliguri', sans-serif;
-            margin: 0;
-            display: flex; justify-content: center; align-items: center;
-            height: 100vh; overflow: hidden;
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            height: 100vh; 
+            overflow: hidden;
         }
 
         .app-container {
-            width: 95%; max-width: 420px; height: 92vh;
-            display: flex; flex-direction: column;
+            width: 95%; 
+            max-width: 420px; 
+            height: 92vh;
+            display: flex; 
+            flex-direction: column;
             background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0) 100%);
-            border-radius: 30px; padding: 25px; position: relative;
+            border-radius: 30px; 
+            padding: 25px; 
+            position: relative;
             border: 1px solid rgba(172, 247, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        /* --- Uiverse TV Styles (Resized to Medium/Large) --- */
-        .main_wrapper { display: flex; align-items: center; justify-content: center; width: 100%; height: auto; margin: 15px 0; scale: 1.1; }
-        .main { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .antenna { width: 5em; height: 5em; border-radius: 50%; border: 2px solid black; background-color: #f27405; margin-bottom: -6em; z-index: -1; position: relative;}
-        .antenna_shadow { position: absolute; background-color: transparent; width: 50px; height: 56px; margin-left: 1.68em; border-radius: 45%; transform: rotate(140deg); border: 4px solid transparent; box-shadow: inset 0px 16px #a85103; }
-        .a1 { position: relative; top: -102%; left: -130%; width: 12em; height: 5.5em; border-radius: 50px; background-image: linear-gradient(#171717, #171717, #353535, #353535, #171717); transform: rotate(-29deg); clip-path: polygon(50% 0%, 49% 100%, 52% 100%); }
-        .a2 { position: relative; top: -210%; left: -10%; width: 12em; height: 4em; border-radius: 50px; background-image: linear-gradient(#171717, #171717, #353535, #353535, #171717); clip-path: polygon(47% 0, 47% 0, 34% 34%, 54% 25%, 32% 100%, 29% 96%, 49% 32%, 30% 38%); transform: rotate(-8deg); }
-        .tv { width: 20em; height: 11em; margin-top: 3em; border-radius: 15px; background-color: #d36604; display: flex; justify-content: center; border: 2px solid #1d0e01; box-shadow: inset 0.2em 0.2em #e69635; position: relative; }
-        .screen { width: 13.5em; height: 9.5em; border: 2px solid #1d0e01; background: #000; border-radius: 10px; z-index: 99; display: flex; align-items: center; justify-content: center; padding: 12px; margin-top: 0.6em; }
-        .notfound_text { font-size: 0.95em; color: #ffcc00; font-weight: bold; text-align: center; line-height: 1.5; font-family: 'Hind Siliguri'; }
-        .buttons_div { width: 4.5em; align-self: center; height: 9.5em; background-color: #e69635; border: 2px solid #1d0e01; padding: 0.6em; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-direction: column; row-gap: 0.85em; margin-top: 0.6em; }
-        .b1, .b2 { width: 1.8em; height: 1.8em; border-radius: 50%; background-color: #7f5934; border: 2px solid black; position: relative; }
-        .speakers { display: flex; flex-direction: column; row-gap: 0.6em; }
-        .speakers .g { width: 2.2em; height: 2px; background-color: #171717; }
-        .bottom { width: 100%; display: flex; justify-content: center; gap: 11em; margin-top: -5px; }
-        .base1, .base2 { height: 1.2em; width: 2.5em; border: 2px solid #171717; background-color: #4d4d4d; }
-
-        /* --- Option Animation (Slide Up) --- */
-        @keyframes slideUp { 
-            from { opacity: 0; transform: translateY(20px); } 
-            to { opacity: 1; transform: translateY(0); } 
+        /* --- TV Box Section (Wish Page) --- */
+        .main_wrapper { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 100%; 
+            margin: 20px 0; 
+            transform: scale(1.15); /* বড় করা হয়েছে */
         }
+
+        .main { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+        }
+
+        .antenna { 
+            width: 5em; 
+            height: 5em; 
+            border-radius: 50%; 
+            border: 2px solid black; 
+            background-color: #f27405; 
+            margin-bottom: -6em; 
+            z-index: -1; 
+            position: relative;
+        }
+
+        .antenna_shadow { 
+            position: absolute; 
+            background-color: transparent; 
+            width: 50px; 
+            height: 56px; 
+            margin-left: 1.68em; 
+            border-radius: 45%; 
+            transform: rotate(140deg); 
+            border: 4px solid transparent; 
+            box-shadow: inset 0px 16px #a85103; 
+        }
+
+        .a1 { 
+            position: relative; 
+            top: -102%; 
+            left: -130%; 
+            width: 12em; 
+            height: 5.5em; 
+            border-radius: 50px; 
+            background-image: linear-gradient(#171717, #171717, #353535, #353535, #171717); 
+            transform: rotate(-29deg); 
+            clip-path: polygon(50% 0%, 49% 100%, 52% 100%); 
+        }
+
+        .a2 { 
+            position: relative; 
+            top: -210%; 
+            left: -10%; 
+            width: 12em; 
+            height: 4em; 
+            border-radius: 50px; 
+            background-image: linear-gradient(#171717, #171717, #353535, #353535, #171717); 
+            clip-path: polygon(47% 0, 47% 0, 34% 34%, 54% 25%, 32% 100%, 29% 96%, 49% 32%, 30% 38%); 
+            transform: rotate(-8deg); 
+        }
+
+        .tv { 
+            width: 20em; 
+            height: 11.5em; 
+            margin-top: 3em; 
+            border-radius: 15px; 
+            background-color: #d36604; 
+            display: flex; 
+            justify-content: center; 
+            border: 2px solid #1d0e01; 
+            box-shadow: inset 0.2em 0.2em #e69635; 
+            position: relative; 
+        }
+
+        .screen { 
+            width: 13.5em; 
+            height: 10em; 
+            border: 2px solid #1d0e01; 
+            background: #000; 
+            border-radius: 10px; 
+            z-index: 99; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 15px; 
+            margin-top: 0.6em; 
+        }
+
+        .notfound_text { 
+            font-size: 1em; 
+            color: #ffcc00; 
+            font-weight: bold; 
+            text-align: center; 
+            line-height: 1.4; 
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+        }
+
+        .buttons_div { 
+            width: 4.5em; 
+            align-self: center; 
+            height: 10em; 
+            background-color: #e69635; 
+            border: 2px solid #1d0e01; 
+            padding: 0.6em; 
+            border-radius: 10px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex-direction: column; 
+            row-gap: 0.85em; 
+            margin-top: 0.6em; 
+        }
+
+        .b1, .b2 { 
+            width: 1.8em; 
+            height: 1.8em; 
+            border-radius: 50%; 
+            background-color: #7f5934; 
+            border: 2px solid black; 
+        }
+
+        .speakers { 
+            display: flex; 
+            flex-direction: column; 
+            row-gap: 0.6em; 
+        }
+
+        .speakers .g { 
+            width: 2.2em; 
+            height: 2px; 
+            background-color: #171717; 
+        }
+
+        .bottom { 
+            width: 100%; 
+            display: flex; 
+            justify-content: center; 
+            gap: 11em; 
+            margin-top: -5px; 
+        }
+
+        .base1, .base2 { 
+            height: 1.2em; 
+            width: 2.5em; 
+            border: 2px solid #171717; 
+            background-color: #4d4d4d; 
+        }
+
+        /* --- Option Animation (Slide Up One by One) --- */
+        @keyframes slideInUp { 
+            0% { opacity: 0; transform: translateY(30px); } 
+            100% { opacity: 1; transform: translateY(0); } 
+        }
+
         .opt-cyber-btn { 
-            min-height: 58px; width: 100%; display: flex; align-items: center; padding-left: 25px; cursor: pointer; 
-            border: 2px solid var(--cyber-blue); color: #fff; font-size: 1.2rem; margin-bottom: 12px; 
-            transition: 0.3s; background: rgba(110, 239, 255, 0.1);
-            opacity: 0; animation: slideUp 0.4s forwards;
+            min-height: 58px; 
+            width: 100%; 
+            display: flex; 
+            align-items: center; 
+            padding-left: 25px; 
+            cursor: pointer; 
+            border: 2px solid var(--cyber-blue); 
+            color: #fff; 
+            font-size: 1.2rem; 
+            margin-bottom: 15px; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            background: rgba(110, 239, 255, 0.05);
+            opacity: 0; 
+            animation: slideInUp 0.5s forwards;
+            border-radius: 12px;
         }
-        .opt-cyber-btn.selected { background: rgba(172, 247, 255, 0.4); }
 
-        /* --- Existing Styles --- */
-        .name-input { width: 100%; padding: 15px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 2px solid var(--accent); color: #fff; font-size: 1.2rem; text-align: center; margin-bottom: 30px; }
-        .q-box { width: 100%; margin-bottom: 25px; }
-        .q-front { padding: 22px; border-radius: 15px; font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, #f27121, #e94057, #8a2387); text-align: center; }
+        .opt-cyber-btn:hover {
+            background: rgba(172, 247, 255, 0.15);
+            transform: translateX(5px);
+        }
 
-        /* --- Uiverse Button --- */
-        .button { font-family: "Rubik", sans-serif; cursor: pointer; position: relative; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; border-radius: 1rem; color: var(--stone-50); background: none; border: none; margin-top: 20px; }
-        .button::before { content: ""; position: absolute; z-index: 0; height: 220%; aspect-ratio: 1; background: white; clip-path: polygon(100% 50%, 91.48% 56.57%, 97.55% 65.45%, 87.42% 69.07%, 90.45% 79.39%, 79.7% 79.7%, 79.39% 90.45%, 69.07% 87.42%, 65.45% 97.55%, 56.57% 91.48%, 50% 100%, 43.43% 91.48%, 34.55% 97.55%, 30.93% 87.42%, 20.61% 90.45%, 20.3% 79.7%, 9.55% 79.39%, 12.58% 69.07%, 2.45% 65.45%, 8.52% 56.57%, 0% 50%, 8.52% 43.43%, 2.45% 34.55%, 12.58% 30.93%, 9.55% 20.61%, 20.3% 20.3%, 20.61% 9.55%, 30.93% 12.58%, 34.55% 2.45%, 43.43% 8.52%, 50% 0%, 56.57% 8.52%, 65.45% 2.45%, 69.07% 12.58%, 79.39% 9.55%, 79.7% 20.3%, 90.45% 20.61%, 87.42% 30.93%, 97.55% 34.55%, 91.48% 43.43%); animation: star-rotate 4s linear infinite; opacity: 0.1; }
-        .button > div { padding: 2px; border-radius: 1rem; background-color: var(--yellow-400); transform: translate(-4px, -4px); box-shadow: 2px 2px 0 0 var(--yellow-400), 0 0 0 2px var(--stone-800), 0 0 0 4px var(--stone-50); }
-        .button > div > div { position: relative; border-radius: calc(1rem - 2px); background-color: var(--stone-800); overflow: hidden; padding: 0.8rem 1.8rem; }
+        .opt-cyber-btn.selected { 
+            background: rgba(172, 247, 255, 0.3); 
+            border-color: #fff;
+            box-shadow: 0 0 15px rgba(172, 247, 255, 0.4);
+        }
+
+        /* --- Input Styles --- */
+        .name-input { 
+            width: 100%; 
+            padding: 18px; 
+            border-radius: 15px; 
+            background: var(--glass); 
+            border: 2px solid var(--accent); 
+            color: #fff; 
+            font-size: 1.2rem; 
+            text-align: center; 
+            margin-bottom: 35px; 
+            transition: 0.3s;
+        }
+
+        .name-input:focus {
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 0 20px rgba(172, 247, 255, 0.2);
+        }
+
+        .q-box { 
+            width: 100%; 
+            margin-bottom: 30px; 
+        }
+
+        .q-front { 
+            padding: 25px; 
+            border-radius: 20px; 
+            font-size: 1.6rem; 
+            font-weight: 700; 
+            background: linear-gradient(135deg, #f27121, #e94057, #8a2387); 
+            text-align: center; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        /* --- Uiverse Button Styles --- */
+        .button { 
+            font-family: "Rubik", sans-serif; 
+            cursor: pointer; 
+            position: relative; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-weight: bold; 
+            font-size: 1.1rem; 
+            border-radius: 1rem; 
+            color: var(--stone-50); 
+            background: none; 
+            border: none; 
+            margin-top: 25px; 
+        }
+
+        .button::before { 
+            content: ""; 
+            position: absolute; 
+            z-index: 0; 
+            height: 220%; 
+            aspect-ratio: 1; 
+            background: white; 
+            clip-path: polygon(100% 50%, 91.48% 56.57%, 97.55% 65.45%, 87.42% 69.07%, 90.45% 79.39%, 79.7% 79.7%, 79.39% 90.45%, 69.07% 87.42%, 65.45% 97.55%, 56.57% 91.48%, 50% 100%, 43.43% 91.48%, 34.55% 97.55%, 30.93% 87.42%, 20.61% 90.45%, 20.3% 79.7%, 9.55% 79.39%, 12.58% 69.07%, 2.45% 65.45%, 8.52% 56.57%, 0% 50%, 8.52% 43.43%, 2.45% 34.55%, 12.58% 30.93%, 9.55% 20.61%, 20.3% 20.3%, 20.61% 9.55%, 30.93% 12.58%, 34.55% 2.45%, 43.43% 8.52%, 50% 0%, 56.57% 8.52%, 65.45% 2.45%, 69.07% 12.58%, 79.39% 9.55%, 79.7% 20.3%, 90.45% 20.61%, 87.42% 30.93%, 97.55% 34.55%, 91.48% 43.43%); 
+            animation: star-rotate 4s linear infinite; 
+            opacity: 0.1; 
+        }
+
+        .button > div { 
+            padding: 2px; 
+            border-radius: 1rem; 
+            background-color: var(--yellow-400); 
+            transform: translate(-4px, -4px); 
+            box-shadow: 2px 2px 0 0 var(--yellow-400), 0 0 0 2px var(--stone-800), 0 0 0 4px var(--stone-50); 
+        }
+
+        .button > div > div { 
+            position: relative; 
+            border-radius: calc(1rem - 2px); 
+            background-color: var(--stone-800); 
+            overflow: hidden; 
+            padding: 0.8rem 2rem; 
+        }
         
         @keyframes star-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
         .hidden { display: none; }
-        .share-box { background: rgba(255,255,255,0.08); padding: 15px; border-radius: 12px; border: 1.5px dashed var(--accent); margin: 20px 0; color: #acf7ff; text-align: center; font-size: 0.8rem; word-break: break-all; }
-        #custom-toast { position: fixed; top: 30px; background: #fff; padding: 12px 30px; border-radius: 50px; color: #000; font-weight: 800; z-index: 9999; transform: translateY(-150px); transition: 0.5s; }
+
+        .share-box { 
+            background: rgba(255,255,255,0.06); 
+            padding: 20px; 
+            border-radius: 15px; 
+            border: 1.5px dashed var(--accent); 
+            margin: 25px 0; 
+            color: #acf7ff; 
+            text-align: center; 
+            font-size: 0.9rem; 
+            word-break: break-all; 
+        }
+
+        #custom-toast { 
+            position: fixed; 
+            top: 30px; 
+            background: #fff; 
+            padding: 12px 30px; 
+            border-radius: 50px; 
+            color: #000; 
+            font-weight: 800; 
+            z-index: 9999; 
+            transform: translateY(-150px); 
+            transition: 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); 
+        }
+
         #custom-toast.show { transform: translateY(0); }
     </style>
 </head>
 <body>
 
     <div id="custom-toast">Link Copied! ✅</div>
+    
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="app-container" id="app">
-        <div id="screen-home" style="text-align: center; margin-top: 40px;">
-            <h1 style="color:var(--accent); font-size: 3rem;">Eid Salami🌙</h1>
+        <div id="screen-home" style="text-align: center; margin-top: 50px;">
+            <h1 style="color:var(--accent); font-size: 3.2rem; margin-bottom: 20px;">Eid Salami🌙</h1>
             <input type="text" id="user-name" class="name-input" placeholder="আপনার নাম লিখুন...">
             <div id="home-btns"></div>
         </div>
 
         <div id="screen-main" class="hidden">
-            <div id="progress-text" style="color:var(--accent); text-align: center; margin-bottom: 10px; font-weight: bold;"></div>
+            <div id="progress-text" style="color:var(--accent); text-align: center; margin-bottom: 15px; font-weight: bold; font-size: 1.1rem;"></div>
             <div id="question-area"></div>
             <div id="options-container"></div>
             <div id="action-btn-area" style="display: flex; justify-content: center;"></div>
@@ -110,6 +380,7 @@
     </div>
 
     <script>
+        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyBTKGsT5CzPBbEGmqHfvkGPDHfIa8c6fQs",
             authDomain: "eid-salami-quiz.firebaseapp.com",
@@ -122,13 +393,25 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
+        // Variables
         let userName = "বন্ধু";
         let quizData = [];
         let currentIndex = 0;
         let selectedAns = null;
         let score = 0;
         let mode = 'play';
+        let isMusicPlaying = false;
 
+        // Music Function
+        function startMusic() {
+            if(!isMusicPlaying) {
+                const audio = document.getElementById('bg-music');
+                audio.play().catch(e => console.log("Audio play blocked."));
+                isMusicPlaying = true;
+            }
+        }
+
+        // Questions
         const readyQuestions = [
             { q: "আমার প্রিয় খাবার কোনটি?", opts: ["বিরিয়ানি", "কাচ্চি", "ফুচকা", "বার্গার"] },
             { q: "আমি ফ্রি সময়ে কি করি?", opts: ["মুভি দেখি", "কোডিং করি", "ঘুমাই", "ঘুরতে যাই"] },
@@ -146,35 +429,49 @@
             const params = new URLSearchParams(window.location.search);
             const quizId = params.get('id');
             const homeBtns = document.getElementById('home-btns');
-            if(quizId) homeBtns.innerHTML = generateUiverseBtn("কুইজ খেলুন", `startQuiz('${quizId}')`);
-            else homeBtns.innerHTML = generateUiverseBtn("কুইজ তৈরি করো", "startCreate()");
+            
+            if(quizId) {
+                homeBtns.innerHTML = generateUiverseBtn("কুইজ খেলুন", `startQuiz('${quizId}')`);
+            } else {
+                homeBtns.innerHTML = generateUiverseBtn("কুইজ তৈরি করো", "startCreate()");
+            }
         }
 
         function generateUiverseBtn(text, clickFn) {
-            return `<button class="button" onclick="${clickFn}"><div><div><div>${text}</div></div></div></button>`;
+            return `<button class="button" onclick="startMusic(); ${clickFn}"><div><div><div>${text}</div></div></div></button>`;
         }
 
         function validateName() {
             const val = document.getElementById('user-name').value.trim();
             if(val) { userName = val; return true; }
-            alert("নাম লিখুন!"); return false;
+            alert("আপনার সুন্দর নামটি লিখুন!"); return false;
         }
 
         function showScreen(id) {
-            ['screen-home', 'screen-main', 'screen-final'].forEach(s => document.getElementById(s).classList.add('hidden'));
+            const screens = ['screen-home', 'screen-main', 'screen-final'];
+            screens.forEach(s => document.getElementById(s).classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
         }
 
-        function startCreate() { if(validateName()) { mode = 'create'; showScreen('screen-main'); renderStep(); } }
+        function startCreate() {
+            if(validateName()) {
+                mode = 'create';
+                showScreen('screen-main');
+                renderStep();
+            }
+        }
 
         function renderStep() {
             const data = readyQuestions[currentIndex];
-            document.getElementById('progress-text').innerText = `Step: ${currentIndex + 1}/10`;
+            document.getElementById('progress-text').innerText = `ধাপ: ${currentIndex + 1} / 10`;
             document.getElementById('question-area').innerHTML = `<div class="q-box"><div class="q-front">${data.q}</div></div>`;
+            
             let optsHtml = "";
             data.opts.forEach((o, i) => { 
-                optsHtml += `<div class="opt-cyber-btn" id="opt-${i}" style="animation-delay: ${i*0.1}s" onclick="selectOpt(${i})">${o}</div>`; 
+                // Delay দিয়ে অপশন এনিমেশন
+                optsHtml += `<div class="opt-cyber-btn" id="opt-${i}" style="animation-delay: ${i * 0.15}s" onclick="selectOpt(${i})">${o}</div>`; 
             });
+            
             document.getElementById('options-container').innerHTML = optsHtml;
             document.getElementById('action-btn-area').innerHTML = generateUiverseBtn("পরবর্তী", "handleNext()");
             selectedAns = null;
@@ -187,25 +484,50 @@
         }
 
         function handleNext() {
-            if(selectedAns === null) return;
+            if(selectedAns === null) {
+                alert("একটি অপশন সিলেক্ট করো!");
+                return;
+            }
+
             if(mode === 'create') {
-                quizData.push({ q: readyQuestions[currentIndex].q, opts: readyQuestions[currentIndex].opts, ans: selectedAns });
-                if(currentIndex < 9) { currentIndex++; renderStep(); } else { saveQuiz(); }
+                quizData.push({
+                    q: readyQuestions[currentIndex].q,
+                    opts: readyQuestions[currentIndex].opts,
+                    ans: selectedAns
+                });
+                
+                if(currentIndex < 9) {
+                    currentIndex++;
+                    renderStep();
+                } else {
+                    saveQuizToFirebase();
+                }
             } else {
                 if(selectedAns === quizData[currentIndex].ans) score++;
-                if(currentIndex < quizData.length - 1) { currentIndex++; renderPlayStep(); } else { showFinalResult(); }
+                
+                if(currentIndex < quizData.length - 1) {
+                    currentIndex++;
+                    renderPlayStep();
+                } else {
+                    showFinalResult();
+                }
             }
         }
 
-        function saveQuiz() {
-            const id = "rakib" + Math.floor(Math.random() * 900000);
-            db.ref('quizzes/' + id).set({ creator: userName, questions: quizData }).then(() => {
+        function saveQuizToFirebase() {
+            const id = "rakib" + Math.floor(Math.random() * 899999 + 100000);
+            db.ref('quizzes/' + id).set({
+                creator: userName,
+                questions: quizData
+            }).then(() => {
                 showScreen('screen-final');
                 const link = window.location.origin + window.location.pathname + "?id=" + id;
                 document.getElementById('final-body').innerHTML = `
-                    <h2 style="text-align:center; color:var(--accent);">Ready! 🚀</h2>
-                    <div class="share-box">${link}</div>
-                    <div style="display:flex; justify-content:center;">${generateUiverseBtn("লিঙ্ক কপি", `copyLink('${link}')`)}</div>
+                    <div style="text-align:center;">
+                        <h2 style="color:var(--accent); font-size: 2rem;">তৈরি হয়ে গেছে! 🚀</h2>
+                        <div class="share-box">${link}</div>
+                        ${generateUiverseBtn("লিঙ্ক কপি করুন", `copyToClipboard('${link}')`)}
+                    </div>
                 `;
             });
         }
@@ -213,37 +535,53 @@
         function startQuiz(id) {
             if(validateName()) {
                 db.ref('quizzes/' + id).once('value', snap => {
-                    if(snap.exists()) { quizData = snap.val().questions; showScreen('screen-main'); mode = 'play'; renderPlayStep(); }
+                    if(snap.exists()) {
+                        quizData = snap.val().questions;
+                        mode = 'play';
+                        showScreen('screen-main');
+                        renderPlayStep();
+                    } else {
+                        alert("কুইজটি খুঁজে পাওয়া যায়নি!");
+                    }
                 });
             }
         }
 
         function renderPlayStep() {
             const data = quizData[currentIndex];
-            document.getElementById('progress-text').innerText = `প্রশ্ন: ${currentIndex + 1}/${quizData.length}`;
+            document.getElementById('progress-text').innerText = `প্রশ্ন: ${currentIndex + 1} / ${quizData.length}`;
             document.getElementById('question-area').innerHTML = `<div class="q-box"><div class="q-front">${data.q}</div></div>`;
+            
             let optsHtml = "";
             data.opts.forEach((o, i) => { 
-                optsHtml += `<div class="opt-cyber-btn" id="opt-${i}" style="animation-delay: ${i*0.1}s" onclick="selectOpt(${i})">${o}</div>`; 
+                optsHtml += `<div class="opt-cyber-btn" id="opt-${i}" style="animation-delay: ${i * 0.15}s" onclick="selectOpt(${i})">${o}</div>`; 
             });
+            
             document.getElementById('options-container').innerHTML = optsHtml;
             document.getElementById('action-btn-area').innerHTML = generateUiverseBtn("সাবমিট", "handleNext()");
             selectedAns = null;
         }
 
         function typeWriter(text, element) {
-            let i = 0; element.innerHTML = "";
-            function type() { if (i < text.length) { element.innerHTML += text.charAt(i); i++; setTimeout(type, 80); } }
+            let i = 0;
+            element.innerHTML = "";
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, 70);
+                }
+            }
             type();
         }
 
         function showFinalResult() {
             showScreen('screen-final');
-            const wishText = `${userName}, ঈদ মোবারক! তুমি ${score}টি সঠিক উত্তর দিয়ে ৳${score * 100} সালামি জিতেছো!`;
+            const resultMsg = `${userName}, ঈদ মোবারক! তুমি ${score}টি সঠিক উত্তর দিয়েছ এবং ৳${score * 100} সালামি জিতেছো!`;
             
             document.getElementById('final-body').innerHTML = `
-                <div style="text-align:center;">
-                    <h2 style="color:var(--yellow-400); margin-bottom:5px;">Score: ${score}/${quizData.length}</h2>
+                <div style="text-align:center; margin-bottom: 20px;">
+                    <h2 style="color:var(--yellow-400); font-size: 1.8rem;">আপনার স্কোর: ${score}/${quizData.length}</h2>
                 </div>
                 
                 <div class="main_wrapper">
@@ -257,7 +595,7 @@
                                 <div class="screen"><span class="notfound_text" id="type-text"></span></div>
                             </div>
                             <div class="buttons_div">
-                                <div class="b1"><div></div></div><div class="b2"></div>
+                                <div class="b1"></div><div class="b2"></div>
                                 <div class="speakers"><div class="g"></div><div class="g"></div><div class="g"></div></div>
                             </div>
                         </div>
@@ -265,15 +603,20 @@
                     </div>
                 </div>
 
-                <p style="text-align:center; color:rgba(255,255,255,0.6); font-size:0.85rem; padding: 0 15px; margin-top:20px;">
-                    আপনিও কি চান আপনার বন্ধুরা আপনাকে কত চেনে তা জানতে? তাহলে বন্ধুদেরকেও বলুন কুইজ তৈরি করতে!
+                <p style="text-align:center; color:rgba(255,255,255,0.6); font-size:0.9rem; padding: 20px;">
+                    আপনিও কি চান আপনার বন্ধুরা আপনাকে কতটুকু চেনে তা দেখতে? তাহলে এখনই কুইজ তৈরি করুন!
                 </p>
-                <div style="display:flex; justify-content:center; margin-top:10px;">${generateUiverseBtn("হোমে ফিরুন", "location.href=window.location.pathname")}</div>
+                <div style="display:flex; justify-content:center;">
+                    ${generateUiverseBtn("হোমে ফিরে যান", "location.href=window.location.pathname")}
+                </div>
             `;
-            setTimeout(() => typeWriter(wishText, document.getElementById('type-text')), 500);
+            
+            setTimeout(() => {
+                typeWriter(resultMsg, document.getElementById('type-text'));
+            }, 600);
         }
 
-        function copyLink(txt) {
+        function copyToClipboard(txt) {
             navigator.clipboard.writeText(txt).then(() => {
                 const toast = document.getElementById('custom-toast');
                 toast.classList.add('show');
@@ -281,6 +624,7 @@
             });
         }
 
+        // Initialize
         init();
     </script>
 </body>
