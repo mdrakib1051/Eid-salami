@@ -3,17 +3,247 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Eid Salami Challenge</title>
+    <title>Eid Salami Quiz | Premium Edition</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+    <style>
+        :root {
+            --bg: #09090b;
+            --accent: #00f2ff;
+            --glass: rgba(255, 255, 255, 0.05);
+            --gold: #ffd700;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Hind Siliguri', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Messenger Bubble Animation */
+        .bubble {
+            background: linear-gradient(145deg, #1f1f23, #18181b);
+            padding: 18px 22px;
+            border-radius: 22px 22px 22px 5px;
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            animation: slideUp 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+
+        /* Premium Buttons */
+        .btn {
+            background: var(--glass);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            padding: 16px;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+            border-color: var(--accent);
+            background: rgba(0, 242, 255, 0.1);
+        }
+
+        .primary-btn {
+            background: var(--accent);
+            color: #000;
+            border: none;
+        }
+
+        /* Input Styles */
+        .premium-input {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 12px;
+            color: #fff;
+            margin-bottom: 10px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .hidden { display: none; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-display {
+            font-size: 3.5rem;
+            color: var(--gold);
+            text-align: center;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="app-wrapper">
-        <div id="main-content" class="content-area">
-            </div>
+    <div class="app-container" id="app">
+        <div id="home-screen">
+            <h1 style="color:var(--accent); text-align:center; font-size:2.5rem;">Eid Salami 🌙</h1>
+            <p style="text-align:center; opacity:0.7; margin-bottom:40px;">বন্ধুর প্রশ্নের উত্তর দিন অথবা নিজের কুইজ তৈরি করুন।</p>
+            <div class="btn primary-btn" onclick="startAppQuiz()">কুইজ শুরু করুন</div>
+            <div class="btn" onclick="showCreateScreen()">নিজের কুইজ তৈরি করুন</div>
+        </div>
+
+        <div id="create-screen" class="hidden">
+            <div class="bubble" id="step-msg">প্রশ্ন ১/১০: আপনার প্রশ্নটি লিখুন</div>
+            <input type="text" id="q-input" class="premium-input" placeholder="যেমন: আমার প্রিয় রঙ কি?">
+            <input type="text" id="ans-input" class="premium-input" style="border-left: 4px solid #00ff88;" placeholder="সঠিক উত্তর">
+            <input type="text" id="opt2-input" class="premium-input" placeholder="ভুল অপশন ১">
+            <input type="text" id="opt3-input" class="premium-input" placeholder="ভুল অপশন ২">
+            <div class="btn primary-btn" onclick="nextQuestion()">পরবর্তী প্রশ্ন</div>
+        </div>
+
+        <div id="play-screen" class="hidden">
+            <div id="q-number" style="color:var(--accent); font-size:0.9rem; margin-bottom:5px;"></div>
+            <div class="bubble" id="q-text"></div>
+            <div id="options-box"></div>
+        </div>
+
+        <div id="result-screen" class="hidden">
+            <div class="bubble">অভিনন্দন! আপনার মোট সালামি:</div>
+            <div class="score-display" id="salami-val">৳০</div>
+            <div class="btn primary-btn" onclick="location.reload()">হোম পেজে ফিরুন</div>
+        </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // --- ফায়ারবেস কনফিগারেশন (আপনার তথ্য এখানে দিন) ---
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "YOUR_ID",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // --- ভেরিয়েবলস ---
+        let createdQuestions = [];
+        let currentStep = 1;
+        let playIndex = 0;
+        let score = 0;
+        let quizFromDb = [];
+
+        // --- কুইজ তৈরির লজিক ---
+        function showCreateScreen() {
+            document.getElementById('home-screen').classList.add('hidden');
+            document.getElementById('create-screen').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            const q = document.getElementById('q-input').value;
+            const a = document.getElementById('ans-input').value;
+            const o2 = document.getElementById('opt2-input').value;
+            const o3 = document.getElementById('opt3-input').value;
+
+            if(!q || !a) return alert("প্রশ্ন ও সঠিক উত্তর দিন!");
+
+            createdQuestions.push({ q: q, options: [a, o2, o3], correct: 0 });
+
+            if(currentStep < 10) {
+                currentStep++;
+                document.getElementById('step-msg').innerText = `প্রশ্ন ${currentStep}/১০: আপনার প্রশ্নটি লিখুন`;
+                document.querySelectorAll('.premium-input').forEach(i => i.value = "");
+            } else {
+                saveQuiz();
+            }
+        }
+
+        function saveQuiz() {
+            const id = Date.now().toString().slice(-6);
+            db.ref('quizzes/' + id).set({ questions: createdQuestions })
+            .then(() => {
+                alert("কুইজ তৈরি হয়েছে! আপনার আইডি: " + id);
+                location.reload();
+            });
+        }
+
+        // --- কুইজ খেলার লজিক ---
+        function startAppQuiz() {
+            const id = prompt("কুইজ আইডি দিন (অথবা ডেমো খেলতে ওকে দিন):");
+            if(id) {
+                db.ref('quizzes/' + id).once('value', snapshot => {
+                    if(snapshot.exists()) {
+                        quizFromDb = snapshot.val().questions;
+                        runQuiz();
+                    } else { alert("আইডি ভুল!"); }
+                });
+            } else {
+                // ডেমো প্রশ্ন
+                quizFromDb = [{q: "সালামি কত নিবে?", options: ["৫০০", "১০০০", "১০০"], correct: 1}];
+                runQuiz();
+            }
+        }
+
+        function runQuiz() {
+            document.getElementById('home-screen').classList.add('hidden');
+            document.getElementById('play-screen').classList.remove('hidden');
+            showPlayQuestion();
+        }
+
+        function showPlayQuestion() {
+            const data = quizFromDb[playIndex];
+            document.getElementById('q-number').innerText = `প্রশ্ন ${playIndex + 1}/${quizFromDb.length}`;
+            document.getElementById('q-text').innerText = data.q;
+            
+            let html = "";
+            data.options.forEach((opt, i) => {
+                html += `<div class="btn" onclick="handleAnswer(${i})">${opt}</div>`;
+            });
+            document.getElementById('options-box').innerHTML = html;
+        }
+
+        function handleAnswer(idx) {
+            if(idx === quizFromDb[playIndex].correct) score++;
+            playIndex++;
+            if(playIndex < quizFromDb.length) showPlayQuestion();
+            else showResult();
+        }
+
+        function showResult() {
+            document.getElementById('play-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+            document.getElementById('salami-val').innerText = `৳${score * 100}`;
+        }
+    </script>
 </body>
 </html>
