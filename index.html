@@ -72,14 +72,15 @@
         .share-box { background: rgba(255,255,255,0.06); padding: 20px; border-radius: 15px; border: 1.5px dashed var(--accent); margin: 25px 0; color: #acf7ff; text-align: center; word-break: break-all; }
         #custom-toast { position: fixed; top: 30px; background: #fff; padding: 12px 30px; border-radius: 50px; color: #000; font-weight: 800; z-index: 9999; transform: translateY(-150px); transition: 0.5s; }
         #custom-toast.show { transform: translateY(0); }
-        
-        #yt-player-container { position: absolute; left: -9999px; top: -9999px; }
     </style>
 </head>
 <body>
 
     <div id="custom-toast">Link Copied! ✅</div>
-    <div id="yt-player-container"><div id="player"></div></div>
+    
+    <audio id="eid-song" loop>
+        <source src="https://ia800508.us.archive.org/30/items/o-mor-romjaner-oi-rojar-sheshe/O%20Mor%20Romjaner%20Oi%20Rojar%20Sheshe.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="app-container" id="app">
         <div id="screen-home" style="text-align: center; margin-top: 50px;">
@@ -100,8 +101,6 @@
         </div>
     </div>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
-
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyBTKGsT5CzPBbEGmqHfvkGPDHfIa8c6fQs",
@@ -115,32 +114,12 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        let player;
         let isMusicPlaying = false;
-        // Correct YouTube ID: R6ePrTG0DHs (O Mor Romjaner Oi Rojar Sheshe)
-        const mySongId = 'R6ePrTG0DHs'; 
-
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                height: '0', width: '0',
-                videoId: mySongId,
-                playerVars: { 
-                    'autoplay': 0, 
-                    'controls': 0, 
-                    'loop': 1, 
-                    'playlist': mySongId,
-                    'origin': window.location.origin 
-                },
-                events: { 
-                    'onReady': (e) => console.log("Song Loaded"),
-                    'onError': (e) => console.log("Player Error", e)
-                }
-            });
-        }
+        const audio = document.getElementById('eid-song');
 
         function startMusic() {
-            if(!isMusicPlaying && player && typeof player.playVideo === 'function') {
-                player.playVideo();
+            if(!isMusicPlaying) {
+                audio.play().catch(e => console.log("Auto-play blocked, waiting for interaction."));
                 isMusicPlaying = true;
             }
         }
@@ -258,7 +237,7 @@
             document.getElementById('final-body').innerHTML = `
                 <div style="text-align:center; margin-bottom: 20px;"><h2 style="color:var(--yellow-400); font-size: 1.8rem;">আপনার স্কোর: ${score}/${quizData.length}</h2></div>
                 <div class="main_wrapper"><div class="main"><div class="antenna"><div class="antenna_shadow"></div><div class="a1"></div><div class="a2"></div></div><div class="tv"><div class="display_div"><div class="screen"><span class="notfound_text" id="type-text"></span></div></div><div class="buttons_div"><div class="b1"></div><div class="b2"></div><div class="speakers"><div class="g"></div><div class="g"></div><div class="g"></div></div></div></div><div class="bottom"><div class="base1"></div><div class="base2"></div></div></div></div>
-                <p style="text-align:center; color:rgba(255,255,255,0.6); font-size:0.9rem; padding: 20px;">আপনিও কি চান আপনার বন্ধুরা আপনাকে কতটুকু চেনে তা দেখতে? তাহলে এখনই কুইজ তৈরি করুন!</p>
+                <p style="text-align:center; color:rgba(255,255,255,0.6); font-size:0.9rem; padding: 20px;">আপনিও কি চান আপনার বন্ধুরা আপনাকে কতটুকু চেনে তা দেখতে? এখনই কুইজ তৈরি করুন!</p>
                 <div style="display:flex; justify-content:center;">${generateUiverseBtn("হোমে ফিরে যান", "location.href=window.location.pathname")}</div>
             `;
             setTimeout(() => typeWriter(resultMsg, document.getElementById('type-text')), 600);
