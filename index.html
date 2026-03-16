@@ -37,12 +37,7 @@
             border-radius: 30px; padding: 25px; position: relative;
         }
 
-        /* --- QUESTION BOX (Gradient Style) --- */
-        .q-box {
-            position: relative; width: 100%; margin-bottom: 30px;
-            animation: slideUp 0.4s ease;
-        }
-
+        .q-box { position: relative; width: 100%; margin-bottom: 30px; animation: slideUp 0.4s ease; }
         .q-front {
             display: flex; align-items: center; justify-content: space-between;
             padding: 20px; border-radius: 12px; font-size: 1.25rem; font-weight: 600;
@@ -50,7 +45,6 @@
             box-shadow: 0 10px 20px rgba(233, 64, 87, 0.3);
         }
 
-        /* --- OPTION BUTTON (Cyber Style) --- */
         .opt-btn {
             min-height: 55px; width: 100%; display: flex; align-items: center;
             justify-content: flex-start; padding-left: 25px; position: relative;
@@ -63,53 +57,26 @@
         .opt-btn:before {
             content: ""; width: 4px; height: 28px; background: #19173b;
             border: 2px solid #acf7ff; transform: rotate(-45deg);
-            position: absolute; border-top: 0; border-left: 0; border-bottom: 0;
-            bottom: -8px; left: 4px; border-bottom-left-radius: 10px;
+            position: absolute; bottom: -8px; left: 4px; border-bottom-left-radius: 10px;
         }
 
-        .opt-btn:after {
-            content: ""; position: absolute; left: -2px; bottom: -2px;
-            border-top: 15px solid transparent; border-left: 15px solid #fffcf7;
-        }
+        .opt-btn:after { content: ""; position: absolute; left: -2px; bottom: -2px; border-top: 15px solid transparent; border-left: 15px solid #fffcf7; }
+        .opt-btn.selected { background: rgba(172, 247, 255, 0.4); border-color: #fff; box-shadow: 0 0 15px rgba(172, 247, 255, 0.3); }
 
-        .opt-btn.selected {
-            background: rgba(172, 247, 255, 0.4);
-            box-shadow: 0 0 15px rgba(172, 247, 255, 0.3);
-            border-color: #fff;
-        }
-
-        /* --- NEXT BUTTON (Stone Style + Animation) --- */
         .button-wrapper { display: flex; justify-content: center; margin-top: auto; position: relative; }
-        
-        .button {
-            cursor: pointer; position: relative; display: inline-flex; 
-            align-items: center; justify-content: center; border: none; background: none;
-        }
-
-        /* Rotating Star Animation Background */
+        .button { cursor: pointer; position: relative; display: inline-flex; align-items: center; justify-content: center; border: none; background: none; }
         .button::before {
             content: ""; position: absolute; z-index: 0; height: 180%; aspect-ratio: 1;
             background: white; clip-path: polygon(100% 50%, 91.48% 56.57%, 97.55% 65.45%, 87.42% 69.07%, 90.45% 79.39%, 79.7% 79.7%, 79.39% 90.45%, 69.07% 87.42%, 65.45% 97.55%, 56.57% 91.48%, 50% 100%, 43.43% 91.48%, 34.55% 97.55%, 30.93% 87.42%, 20.61% 90.45%, 20.3% 79.7%, 9.55% 79.39%, 12.58% 69.07%, 2.45% 65.45%, 8.52% 56.57%, 0% 50%, 8.52% 43.43%, 2.45% 34.55%, 12.58% 30.93%, 9.55% 20.61%, 20.3% 20.3%, 20.61% 9.55%, 30.93% 12.58%, 34.55% 2.45%, 43.43% 8.52%, 50% 0%, 56.57% 8.52%, 65.45% 2.45%, 69.07% 12.58%, 79.39% 9.55%, 79.7% 20.3%, 90.45% 20.61%, 87.42% 30.93%, 97.55% 34.55%, 91.48% 43.43%);
             animation: star-rotate 4s linear infinite; opacity: 0.1;
         }
-
-        .button > div { 
-            padding: 3px; border-radius: 1rem; background-color: var(--yellow-400); 
-            transform: translate(-4px, -4px); transition: 0.2s; 
-            box-shadow: 3.5px 3.5px 0 0 var(--yellow-400), 0 0 0 2px var(--stone-800); 
-            position: relative; z-index: 1;
-        }
-
+        .button > div { padding: 3px; border-radius: 1rem; background-color: var(--yellow-400); transform: translate(-4px, -4px); transition: 0.2s; box-shadow: 3.5px 3.5px 0 0 var(--yellow-400), 0 0 0 2px var(--stone-800); position: relative; z-index: 1; }
         .button:active > div { transform: translate(0, 0); box-shadow: none; }
-        
-        .button > div > div { 
-            background-color: var(--stone-800); border-radius: calc(1rem - 2px); 
-            padding: 12px 30px; color: #fff; font-weight: bold; font-size: 1.1rem;
-        }
+        .button > div > div { background-color: var(--stone-800); border-radius: calc(1rem - 2px); padding: 12px 30px; color: #fff; font-weight: bold; font-size: 1.1rem; }
 
         .hidden { display: none; }
         .score-display { font-size: 3.5rem; color: var(--yellow-400); text-align: center; font-weight: 700; margin: 20px 0; }
-        .share-box { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; word-break: break-all; border: 1px dashed var(--accent); margin: 20px 0; color: #00f2ff; }
+        .share-box { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; word-break: break-all; border: 1px dashed var(--accent); margin: 20px 0; color: #acf7ff; text-align: center; font-size: 0.85rem; }
         
         @keyframes star-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
@@ -138,15 +105,17 @@
     </div>
 
     <script>
-        // --- Firebase Config ---
+        // --- আপনার স্ক্রিনশট থেকে নেওয়া ফায়ারবেস কনফিগারেশন ---
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT.firebaseapp.com",
-            databaseURL: "https://YOUR_DATABASE.firebaseio.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT.appspot.com",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyBTKGsT5CzPBbEGmqHfvkGPDHfIa8c6fQs",
+            authDomain: "eid-salami-quiz.firebaseapp.com",
+            projectId: "eid-salami-quiz",
+            storageBucket: "eid-salami-quiz.firebasestorage.app",
+            messagingSenderId: "415072344103",
+            appId: "1:415072344103:web:25ab5babeb023c89a11602",
+            databaseURL: "https://eid-salami-quiz-default-rtdb.firebaseio.com" // এটি আপনার প্রজেক্টের লিঙ্কের সাথে মিল রেখে বসানো হয়েছে
         };
+
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
@@ -174,32 +143,22 @@
             const quizId = params.get('id');
             const homeBtns = document.getElementById('home-btns');
             
-            if(quizId) {
-                homeBtns.innerHTML = generateStoneBtn("কুইজ খেলুন", `startQuiz('${quizId}')`);
-            } else {
-                homeBtns.innerHTML = generateStoneBtn("কুইজ তৈরি করো", "startCreate()");
-            }
+            if(quizId) { homeBtns.innerHTML = generateStoneBtn("কুইজ খেলুন", `startQuiz('${quizId}')`); } 
+            else { homeBtns.innerHTML = generateStoneBtn("কুইজ তৈরি করো", "startCreate()"); }
         }
 
         function generateStoneBtn(text, clickFn) {
             return `<button class="button" onclick="${clickFn}"><div><div><div>${text}</div></div></div></button>`;
         }
 
-        function startCreate() {
-            mode = 'create';
-            showScreen('screen-main');
-            renderStep();
-        }
+        function startCreate() { mode = 'create'; showScreen('screen-main'); renderStep(); }
 
         function renderStep() {
             const data = readyQuestions[currentIndex];
             document.getElementById('progress-text').innerText = `সেটআপ: ${currentIndex + 1}/১০`;
             document.getElementById('display-q').innerText = data.q;
-            
             let optsHtml = "";
-            data.opts.forEach((o, i) => {
-                optsHtml += `<div class="opt-btn" id="opt-${i}" onclick="selectOpt(${i})">${o}</div>`;
-            });
+            data.opts.forEach((o, i) => { optsHtml += `<div class="opt-btn" id="opt-${i}" onclick="selectOpt(${i})">${o}</div>`; });
             document.getElementById('options-container').innerHTML = optsHtml;
             document.getElementById('action-btn-area').innerHTML = generateStoneBtn("পরবর্তী", "handleNext()");
             selectedAns = null;
@@ -215,12 +174,10 @@
             if(selectedAns === null) return alert("উত্তর সিলেক্ট করো!");
             if(mode === 'create') {
                 quizData.push({ q: readyQuestions[currentIndex].q, opts: readyQuestions[currentIndex].opts, ans: selectedAns });
-                if(currentIndex < 9) { currentIndex++; renderStep(); } 
-                else { saveQuiz(); }
+                if(currentIndex < 9) { currentIndex++; renderStep(); } else { saveQuiz(); }
             } else {
                 if(selectedAns === quizData[currentIndex].ans) score++;
-                if(currentIndex < quizData.length - 1) { currentIndex++; renderPlayStep(); }
-                else { showFinalResult(); }
+                if(currentIndex < quizData.length - 1) { currentIndex++; renderPlayStep(); } else { showFinalResult(); }
             }
         }
 
@@ -254,9 +211,7 @@
             document.getElementById('progress-text').innerText = `প্রশ্ন: ${currentIndex + 1}/${quizData.length}`;
             document.getElementById('display-q').innerText = data.q;
             let optsHtml = "";
-            data.opts.forEach((o, i) => {
-                optsHtml += `<div class="opt-btn" id="opt-${i}" onclick="selectOpt(${i})">${o}</div>`;
-            });
+            data.opts.forEach((o, i) => { optsHtml += `<div class="opt-btn" id="opt-${i}" onclick="selectOpt(${i})">${o}</div>`; });
             document.getElementById('options-container').innerHTML = optsHtml;
             document.getElementById('action-btn-area').innerHTML = generateStoneBtn("সাবমিট", "handleNext()");
             selectedAns = null;
@@ -274,14 +229,11 @@
         }
 
         function showScreen(id) {
-            const screens = ['screen-home', 'screen-main', 'screen-final'];
-            screens.forEach(s => document.getElementById(s).classList.add('hidden'));
+            ['screen-home', 'screen-main', 'screen-final'].forEach(s => document.getElementById(s).classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
         }
 
-        function copyLink(txt) {
-            navigator.clipboard.writeText(txt).then(() => alert("কপি হয়েছে!"));
-        }
+        function copyLink(txt) { navigator.clipboard.writeText(txt).then(() => alert("কপি হয়েছে!")); }
 
         init();
     </script>
