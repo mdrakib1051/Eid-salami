@@ -38,29 +38,40 @@
             border: 1px solid rgba(172, 247, 255, 0.1);
         }
 
-        /* --- Uiverse TV Styles --- */
-        .main_wrapper { display: flex; align-items: center; justify-content: center; width: 100%; height: auto; margin: 10px 0; scale: 0.8; }
+        /* --- Uiverse TV Styles (Resized to Medium/Large) --- */
+        .main_wrapper { display: flex; align-items: center; justify-content: center; width: 100%; height: auto; margin: 15px 0; scale: 1.1; }
         .main { display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .antenna { width: 5em; height: 5em; border-radius: 50%; border: 2px solid black; background-color: #f27405; margin-bottom: -6em; z-index: -1; position: relative;}
         .antenna_shadow { position: absolute; background-color: transparent; width: 50px; height: 56px; margin-left: 1.68em; border-radius: 45%; transform: rotate(140deg); border: 4px solid transparent; box-shadow: inset 0px 16px #a85103; }
         .a1 { position: relative; top: -102%; left: -130%; width: 12em; height: 5.5em; border-radius: 50px; background-image: linear-gradient(#171717, #171717, #353535, #353535, #171717); transform: rotate(-29deg); clip-path: polygon(50% 0%, 49% 100%, 52% 100%); }
         .a2 { position: relative; top: -210%; left: -10%; width: 12em; height: 4em; border-radius: 50px; background-image: linear-gradient(#171717, #171717, #353535, #353535, #171717); clip-path: polygon(47% 0, 47% 0, 34% 34%, 54% 25%, 32% 100%, 29% 96%, 49% 32%, 30% 38%); transform: rotate(-8deg); }
-        .tv { width: 17em; height: 9em; margin-top: 3em; border-radius: 15px; background-color: #d36604; display: flex; justify-content: center; border: 2px solid #1d0e01; box-shadow: inset 0.2em 0.2em #e69635; position: relative; }
-        .screen { width: 11em; height: 7.75em; border: 2px solid #1d0e01; background: #000; border-radius: 10px; z-index: 99; display: flex; align-items: center; justify-content: center; padding: 10px; }
-        .notfound_text { font-size: 0.85em; color: #ffcc00; font-weight: bold; text-align: center; line-height: 1.4; font-family: 'Hind Siliguri'; }
-        .buttons_div { width: 4.25em; align-self: center; height: 8em; background-color: #e69635; border: 2px solid #1d0e01; padding: 0.6em; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-direction: column; row-gap: 0.75em; }
-        .b1, .b2 { width: 1.65em; height: 1.65em; border-radius: 50%; background-color: #7f5934; border: 2px solid black; position: relative; }
-        .speakers { display: flex; flex-direction: column; row-gap: 0.5em; }
-        .speakers .g { width: 2em; height: 2px; background-color: #171717; }
-        .bottom { width: 100%; display: flex; justify-content: center; gap: 8em; margin-top: -5px; }
-        .base1, .base2 { height: 1em; width: 2em; border: 2px solid #171717; background-color: #4d4d4d; }
+        .tv { width: 20em; height: 11em; margin-top: 3em; border-radius: 15px; background-color: #d36604; display: flex; justify-content: center; border: 2px solid #1d0e01; box-shadow: inset 0.2em 0.2em #e69635; position: relative; }
+        .screen { width: 13.5em; height: 9.5em; border: 2px solid #1d0e01; background: #000; border-radius: 10px; z-index: 99; display: flex; align-items: center; justify-content: center; padding: 12px; margin-top: 0.6em; }
+        .notfound_text { font-size: 0.95em; color: #ffcc00; font-weight: bold; text-align: center; line-height: 1.5; font-family: 'Hind Siliguri'; }
+        .buttons_div { width: 4.5em; align-self: center; height: 9.5em; background-color: #e69635; border: 2px solid #1d0e01; padding: 0.6em; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-direction: column; row-gap: 0.85em; margin-top: 0.6em; }
+        .b1, .b2 { width: 1.8em; height: 1.8em; border-radius: 50%; background-color: #7f5934; border: 2px solid black; position: relative; }
+        .speakers { display: flex; flex-direction: column; row-gap: 0.6em; }
+        .speakers .g { width: 2.2em; height: 2px; background-color: #171717; }
+        .bottom { width: 100%; display: flex; justify-content: center; gap: 11em; margin-top: -5px; }
+        .base1, .base2 { height: 1.2em; width: 2.5em; border: 2px solid #171717; background-color: #4d4d4d; }
+
+        /* --- Option Animation (Slide Up) --- */
+        @keyframes slideUp { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        .opt-cyber-btn { 
+            min-height: 58px; width: 100%; display: flex; align-items: center; padding-left: 25px; cursor: pointer; 
+            border: 2px solid var(--cyber-blue); color: #fff; font-size: 1.2rem; margin-bottom: 12px; 
+            transition: 0.3s; background: rgba(110, 239, 255, 0.1);
+            opacity: 0; animation: slideUp 0.4s forwards;
+        }
+        .opt-cyber-btn.selected { background: rgba(172, 247, 255, 0.4); }
 
         /* --- Existing Styles --- */
         .name-input { width: 100%; padding: 15px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 2px solid var(--accent); color: #fff; font-size: 1.2rem; text-align: center; margin-bottom: 30px; }
         .q-box { width: 100%; margin-bottom: 25px; }
         .q-front { padding: 22px; border-radius: 15px; font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, #f27121, #e94057, #8a2387); text-align: center; }
-        .opt-cyber-btn { min-height: 58px; width: 100%; display: flex; align-items: center; padding-left: 25px; cursor: pointer; border: 2px solid var(--cyber-blue); color: #fff; font-size: 1.2rem; margin-bottom: 12px; transition: 0.3s; background: rgba(110, 239, 255, 0.1); }
-        .opt-cyber-btn.selected { background: rgba(172, 247, 255, 0.4); }
 
         /* --- Uiverse Button --- */
         .button { font-family: "Rubik", sans-serif; cursor: pointer; position: relative; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; border-radius: 1rem; color: var(--stone-50); background: none; border: none; margin-top: 20px; }
@@ -161,7 +172,9 @@
             document.getElementById('progress-text').innerText = `Step: ${currentIndex + 1}/10`;
             document.getElementById('question-area').innerHTML = `<div class="q-box"><div class="q-front">${data.q}</div></div>`;
             let optsHtml = "";
-            data.opts.forEach((o, i) => { optsHtml += `<div class="opt-cyber-btn" id="opt-${i}" onclick="selectOpt(${i})">${o}</div>`; });
+            data.opts.forEach((o, i) => { 
+                optsHtml += `<div class="opt-cyber-btn" id="opt-${i}" style="animation-delay: ${i*0.1}s" onclick="selectOpt(${i})">${o}</div>`; 
+            });
             document.getElementById('options-container').innerHTML = optsHtml;
             document.getElementById('action-btn-area').innerHTML = generateUiverseBtn("পরবর্তী", "handleNext()");
             selectedAns = null;
@@ -210,7 +223,9 @@
             document.getElementById('progress-text').innerText = `প্রশ্ন: ${currentIndex + 1}/${quizData.length}`;
             document.getElementById('question-area').innerHTML = `<div class="q-box"><div class="q-front">${data.q}</div></div>`;
             let optsHtml = "";
-            data.opts.forEach((o, i) => { optsHtml += `<div class="opt-cyber-btn" id="opt-${i}" onclick="selectOpt(${i})">${o}</div>`; });
+            data.opts.forEach((o, i) => { 
+                optsHtml += `<div class="opt-cyber-btn" id="opt-${i}" style="animation-delay: ${i*0.1}s" onclick="selectOpt(${i})">${o}</div>`; 
+            });
             document.getElementById('options-container').innerHTML = optsHtml;
             document.getElementById('action-btn-area').innerHTML = generateUiverseBtn("সাবমিট", "handleNext()");
             selectedAns = null;
@@ -250,7 +265,7 @@
                     </div>
                 </div>
 
-                <p style="text-align:center; color:rgba(255,255,255,0.6); font-size:0.85rem; padding: 0 15px; margin-top:0;">
+                <p style="text-align:center; color:rgba(255,255,255,0.6); font-size:0.85rem; padding: 0 15px; margin-top:20px;">
                     আপনিও কি চান আপনার বন্ধুরা আপনাকে কত চেনে তা জানতে? তাহলে বন্ধুদেরকেও বলুন কুইজ তৈরি করতে!
                 </p>
                 <div style="display:flex; justify-content:center; margin-top:10px;">${generateUiverseBtn("হোমে ফিরুন", "location.href=window.location.pathname")}</div>
