@@ -62,7 +62,7 @@
             justify-content: center; 
             width: 100%; 
             margin: 20px 0; 
-            transform: scale(1.15); /* বড় করা হয়েছে */
+            transform: scale(1.15); 
         }
 
         .main { 
@@ -206,7 +206,7 @@
             background-color: #4d4d4d; 
         }
 
-        /* --- Option Animation (Slide Up One by One) --- */
+        /* --- Option Animation --- */
         @keyframes slideInUp { 
             0% { opacity: 0; transform: translateY(30px); } 
             100% { opacity: 1; transform: translateY(0); } 
@@ -241,7 +241,7 @@
             box-shadow: 0 0 15px rgba(172, 247, 255, 0.4);
         }
 
-        /* --- Input Styles --- */
+        /* --- UI Elements --- */
         .name-input { 
             width: 100%; 
             padding: 18px; 
@@ -252,12 +252,6 @@
             font-size: 1.2rem; 
             text-align: center; 
             margin-bottom: 35px; 
-            transition: 0.3s;
-        }
-
-        .name-input:focus {
-            background: rgba(255,255,255,0.08);
-            box-shadow: 0 0 20px rgba(172, 247, 255, 0.2);
         }
 
         .q-box { 
@@ -272,10 +266,8 @@
             font-weight: 700; 
             background: linear-gradient(135deg, #f27121, #e94057, #8a2387); 
             text-align: center; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
 
-        /* --- Uiverse Button Styles --- */
         .button { 
             font-family: "Rubik", sans-serif; 
             cursor: pointer; 
@@ -346,7 +338,7 @@
             font-weight: 800; 
             z-index: 9999; 
             transform: translateY(-150px); 
-            transition: 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); 
+            transition: 0.5s; 
         }
 
         #custom-toast.show { transform: translateY(0); }
@@ -357,7 +349,7 @@
     <div id="custom-toast">Link Copied! ✅</div>
     
     <audio id="bg-music" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <source src="https://archive.org/download/o-mor-romjaner-oi-rojar-sheshe/O%20Mor%20Romjaner%20Oi%20Rojar%20Sheshe.mp3" type="audio/mpeg">
     </audio>
 
     <div class="app-container" id="app">
@@ -380,7 +372,6 @@
     </div>
 
     <script>
-        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyBTKGsT5CzPBbEGmqHfvkGPDHfIa8c6fQs",
             authDomain: "eid-salami-quiz.firebaseapp.com",
@@ -393,7 +384,6 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // Variables
         let userName = "বন্ধু";
         let quizData = [];
         let currentIndex = 0;
@@ -402,7 +392,6 @@
         let mode = 'play';
         let isMusicPlaying = false;
 
-        // Music Function
         function startMusic() {
             if(!isMusicPlaying) {
                 const audio = document.getElementById('bg-music');
@@ -411,7 +400,6 @@
             }
         }
 
-        // Questions
         const readyQuestions = [
             { q: "আমার প্রিয় খাবার কোনটি?", opts: ["বিরিয়ানি", "কাচ্চি", "ফুচকা", "বার্গার"] },
             { q: "আমি ফ্রি সময়ে কি করি?", opts: ["মুভি দেখি", "কোডিং করি", "ঘুমাই", "ঘুরতে যাই"] },
@@ -429,12 +417,8 @@
             const params = new URLSearchParams(window.location.search);
             const quizId = params.get('id');
             const homeBtns = document.getElementById('home-btns');
-            
-            if(quizId) {
-                homeBtns.innerHTML = generateUiverseBtn("কুইজ খেলুন", `startQuiz('${quizId}')`);
-            } else {
-                homeBtns.innerHTML = generateUiverseBtn("কুইজ তৈরি করো", "startCreate()");
-            }
+            if(quizId) homeBtns.innerHTML = generateUiverseBtn("কুইজ খেলুন", `startQuiz('${quizId}')`);
+            else homeBtns.innerHTML = generateUiverseBtn("কুইজ তৈরি করো", "startCreate()");
         }
 
         function generateUiverseBtn(text, clickFn) {
@@ -448,8 +432,7 @@
         }
 
         function showScreen(id) {
-            const screens = ['screen-home', 'screen-main', 'screen-final'];
-            screens.forEach(s => document.getElementById(s).classList.add('hidden'));
+            ['screen-home', 'screen-main', 'screen-final'].forEach(s => document.getElementById(s).classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
         }
 
@@ -465,13 +448,10 @@
             const data = readyQuestions[currentIndex];
             document.getElementById('progress-text').innerText = `ধাপ: ${currentIndex + 1} / 10`;
             document.getElementById('question-area').innerHTML = `<div class="q-box"><div class="q-front">${data.q}</div></div>`;
-            
             let optsHtml = "";
             data.opts.forEach((o, i) => { 
-                // Delay দিয়ে অপশন এনিমেশন
                 optsHtml += `<div class="opt-cyber-btn" id="opt-${i}" style="animation-delay: ${i * 0.15}s" onclick="selectOpt(${i})">${o}</div>`; 
             });
-            
             document.getElementById('options-container').innerHTML = optsHtml;
             document.getElementById('action-btn-area').innerHTML = generateUiverseBtn("পরবর্তী", "handleNext()");
             selectedAns = null;
@@ -484,42 +464,19 @@
         }
 
         function handleNext() {
-            if(selectedAns === null) {
-                alert("একটি অপশন সিলেক্ট করো!");
-                return;
-            }
-
+            if(selectedAns === null) return;
             if(mode === 'create') {
-                quizData.push({
-                    q: readyQuestions[currentIndex].q,
-                    opts: readyQuestions[currentIndex].opts,
-                    ans: selectedAns
-                });
-                
-                if(currentIndex < 9) {
-                    currentIndex++;
-                    renderStep();
-                } else {
-                    saveQuizToFirebase();
-                }
+                quizData.push({ q: readyQuestions[currentIndex].q, opts: readyQuestions[currentIndex].opts, ans: selectedAns });
+                if(currentIndex < 9) { currentIndex++; renderStep(); } else { saveQuiz(); }
             } else {
                 if(selectedAns === quizData[currentIndex].ans) score++;
-                
-                if(currentIndex < quizData.length - 1) {
-                    currentIndex++;
-                    renderPlayStep();
-                } else {
-                    showFinalResult();
-                }
+                if(currentIndex < quizData.length - 1) { currentIndex++; renderPlayStep(); } else { showFinalResult(); }
             }
         }
 
-        function saveQuizToFirebase() {
+        function saveQuiz() {
             const id = "rakib" + Math.floor(Math.random() * 899999 + 100000);
-            db.ref('quizzes/' + id).set({
-                creator: userName,
-                questions: quizData
-            }).then(() => {
+            db.ref('quizzes/' + id).set({ creator: userName, questions: quizData }).then(() => {
                 showScreen('screen-final');
                 const link = window.location.origin + window.location.pathname + "?id=" + id;
                 document.getElementById('final-body').innerHTML = `
@@ -540,8 +497,6 @@
                         mode = 'play';
                         showScreen('screen-main');
                         renderPlayStep();
-                    } else {
-                        alert("কুইজটি খুঁজে পাওয়া যায়নি!");
                     }
                 });
             }
@@ -551,39 +506,28 @@
             const data = quizData[currentIndex];
             document.getElementById('progress-text').innerText = `প্রশ্ন: ${currentIndex + 1} / ${quizData.length}`;
             document.getElementById('question-area').innerHTML = `<div class="q-box"><div class="q-front">${data.q}</div></div>`;
-            
             let optsHtml = "";
             data.opts.forEach((o, i) => { 
                 optsHtml += `<div class="opt-cyber-btn" id="opt-${i}" style="animation-delay: ${i * 0.15}s" onclick="selectOpt(${i})">${o}</div>`; 
             });
-            
             document.getElementById('options-container').innerHTML = optsHtml;
             document.getElementById('action-btn-area').innerHTML = generateUiverseBtn("সাবমিট", "handleNext()");
             selectedAns = null;
         }
 
         function typeWriter(text, element) {
-            let i = 0;
-            element.innerHTML = "";
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, 70);
-                }
-            }
+            let i = 0; element.innerHTML = "";
+            function type() { if (i < text.length) { element.innerHTML += text.charAt(i); i++; setTimeout(type, 70); } }
             type();
         }
 
         function showFinalResult() {
             showScreen('screen-final');
             const resultMsg = `${userName}, ঈদ মোবারক! তুমি ${score}টি সঠিক উত্তর দিয়েছ এবং ৳${score * 100} সালামি জিতেছো!`;
-            
             document.getElementById('final-body').innerHTML = `
                 <div style="text-align:center; margin-bottom: 20px;">
                     <h2 style="color:var(--yellow-400); font-size: 1.8rem;">আপনার স্কোর: ${score}/${quizData.length}</h2>
                 </div>
-                
                 <div class="main_wrapper">
                     <div class="main">
                         <div class="antenna">
@@ -602,18 +546,10 @@
                         <div class="bottom"><div class="base1"></div><div class="base2"></div></div>
                     </div>
                 </div>
-
-                <p style="text-align:center; color:rgba(255,255,255,0.6); font-size:0.9rem; padding: 20px;">
-                    আপনিও কি চান আপনার বন্ধুরা আপনাকে কতটুকু চেনে তা দেখতে? তাহলে এখনই কুইজ তৈরি করুন!
-                </p>
-                <div style="display:flex; justify-content:center;">
-                    ${generateUiverseBtn("হোমে ফিরে যান", "location.href=window.location.pathname")}
-                </div>
+                <p style="text-align:center; color:rgba(255,255,255,0.6); font-size:0.9rem; padding: 20px;">আপনিও কি চান আপনার বন্ধুরা আপনাকে কতটুকু চেনে তা দেখতে? তাহলে এখনই কুইজ তৈরি করুন!</p>
+                <div style="display:flex; justify-content:center;">${generateUiverseBtn("হোমে ফিরে যান", "location.href=window.location.pathname")}</div>
             `;
-            
-            setTimeout(() => {
-                typeWriter(resultMsg, document.getElementById('type-text'));
-            }, 600);
+            setTimeout(() => typeWriter(resultMsg, document.getElementById('type-text')), 600);
         }
 
         function copyToClipboard(txt) {
@@ -623,8 +559,6 @@
                 setTimeout(() => toast.classList.remove('show'), 3000);
             });
         }
-
-        // Initialize
         init();
     </script>
 </body>
