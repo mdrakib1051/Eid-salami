@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Eid Salami Quiz Pro | Rakib</title>
+    <title>Eid Salami Quiz Pro</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
@@ -18,7 +18,7 @@
             --cyber-blue: #acf7ff;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
 
         body {
             background-color: var(--bg);
@@ -39,110 +39,78 @@
 
         /* --- Animations --- */
         @keyframes star-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- QUESTION BOX (Spinning Star Design) --- */
-        .q-box-container {
-            display: flex; justify-content: center; margin-bottom: 30px;
-            animation: slideUp 0.6s ease-out;
+        /* --- Name Input Style --- */
+        .name-input {
+            width: 100%; padding: 15px; border-radius: 12px;
+            background: rgba(255,255,255,0.05); border: 2px solid var(--accent);
+            color: #fff; font-size: 1.2rem; text-align: center;
+            margin-bottom: 30px; font-family: 'Hind Siliguri';
         }
 
-        /* From Uiverse.io by augustin_4687 */
-        .spinning-q {
-            position: relative;
-            display: inline-flex;
-            align-items: center; justify-content: center;
-            font-weight: bold; font-size: 1.4rem; border-radius: 1rem;
-            color: #fff; background: transparent; border: none;
-            width: 100%;
+        /* --- Question Box (Clean Gradient) --- */
+        .q-box { 
+            width: 100%; margin-bottom: 25px; animation: slideUp 0.5s ease;
         }
-
-        .spinning-q::before {
-            content: ""; position: absolute; z-index: 0; height: 180%; aspect-ratio: 1;
-            background: white; clip-path: polygon(100% 50%, 91.48% 56.57%, 97.55% 65.45%, 87.42% 69.07%, 90.45% 79.39%, 79.7% 79.7%, 79.39% 90.45%, 69.07% 87.42%, 65.45% 97.55%, 56.57% 91.48%, 50% 100%, 43.43% 91.48%, 34.55% 97.55%, 30.93% 87.42%, 20.61% 90.45%, 20.3% 79.7%, 9.55% 79.39%, 12.58% 69.07%, 2.45% 65.45%, 8.52% 56.57%, 0% 50%, 8.52% 43.43%, 2.45% 34.55%, 12.58% 30.93%, 9.55% 20.61%, 20.3% 20.3%, 20.61% 9.55%, 30.93% 12.58%, 34.55% 2.45%, 43.43% 8.52%, 50% 0%, 56.57% 8.52%, 65.45% 2.45%, 69.07% 12.58%, 79.39% 9.55%, 79.7% 20.3%, 90.45% 20.61%, 87.42% 30.93%, 97.55% 34.55%, 91.48% 43.43%);
-            animation: star-rotate 5s linear infinite; opacity: 0.15;
-        }
-
-        .spinning-q > div { 
-            padding: 3px; border-radius: 1rem; background-color: #f27121; 
-            transform: translate(-4px, -4px); 
-            box-shadow: 3.5px 3.5px 0 0 #e94057, 0 0 0 2px var(--stone-800); 
-            position: relative; z-index: 1; width: 100%;
-        }
-        
-        .spinning-q > div > div { 
+        .q-front {
+            padding: 22px; border-radius: 15px; font-size: 1.5rem; font-weight: 700;
             background: linear-gradient(135deg, #f27121, #e94057, #8a2387);
-            border-radius: calc(1rem - 2px); padding: 20px; 
-            color: #fff; font-weight: 700; text-align: center;
+            box-shadow: 0 10px 25px rgba(233, 64, 87, 0.3); text-align: center;
         }
 
-        /* --- OPTION BUTTON (Broken Corner Design) --- */
-        /* From Uiverse.io by JsGrisales */
+        /* --- Option Button (Broken Corner) --- */
         .opt-cyber-btn {
-            min-height: 60px; width: 100%; display: flex; align-items: center;
-            justify-content: flex-start; padding-left: 30px; position: relative;
-            cursor: pointer; border: 2px solid var(--cyber-blue); color: #ffffff;
-            font-size: 1.2rem; font-weight: 600; margin-bottom: 15px;
-            background: linear-gradient(90deg, rgba(110, 239, 255, 0.4) -12.74%, rgba(106, 224, 255, 0.1) 56.76%);
-            transition: 0.3s;
-            opacity: 0;
-            animation: slideUp 0.4s ease-out forwards;
+            min-height: 58px; width: 100%; display: flex; align-items: center;
+            padding-left: 25px; position: relative; cursor: pointer;
+            border: 2px solid var(--cyber-blue); color: #ffffff;
+            font-size: 1.2rem; font-weight: 600; margin-bottom: 12px;
+            background: linear-gradient(90deg, rgba(110, 239, 255, 0.2) 0%, rgba(106, 224, 255, 0.05) 100%);
+            transition: 0.3s; opacity: 0; animation: slideUp 0.4s forwards;
         }
-
-        .opt-cyber-btn:before {
-            content: ""; width: 4px; height: 28px; background: #19173b;
-            border: 2px solid var(--cyber-blue); transform: rotate(-45deg);
-            position: absolute; bottom: -8px; left: 4px; border-bottom-left-radius: 10px;
-        }
-
         .opt-cyber-btn:after {
             content: ""; position: absolute; left: -2px; bottom: -2px;
-            border-top: 15px solid transparent; border-left: 15px solid #fffcf7;
+            border-top: 14px solid transparent; border-left: 14px solid #fffcf7;
+        }
+        .opt-cyber-btn.selected { background: rgba(172, 247, 255, 0.3); border-color: #fff; }
+
+        /* --- Spinning Button Container --- */
+        .btn-wrapper {
+            position: relative; display: flex; justify-content: center;
+            margin-top: 40px; padding-bottom: 20px;
         }
 
-        .opt-cyber-btn.selected {
-            background: rgba(172, 247, 255, 0.4);
-            box-shadow: 0 0 15px rgba(172, 247, 255, 0.3);
-            border-color: #fff;
+        .spinning-bg {
+            position: absolute; z-index: 0; height: 180px; aspect-ratio: 1;
+            background: white; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            clip-path: polygon(100% 50%, 91.48% 56.57%, 97.55% 65.45%, 87.42% 69.07%, 90.45% 79.39%, 79.7% 79.7%, 79.39% 90.45%, 69.07% 87.42%, 65.45% 97.55%, 56.57% 91.48%, 50% 100%, 43.43% 91.48%, 34.55% 97.55%, 30.93% 87.42%, 20.61% 90.45%, 20.3% 79.7%, 9.55% 79.39%, 12.58% 69.07%, 2.45% 65.45%, 8.52% 56.57%, 0% 50%, 8.52% 43.43%, 2.45% 34.55%, 12.58% 30.93%, 9.55% 20.61%, 20.3% 20.3%, 20.61% 9.55%, 30.93% 12.58%, 34.55% 2.45%, 43.43% 8.52%, 50% 0%, 56.57% 8.52%, 65.45% 2.45%, 69.07% 12.58%, 79.39% 9.55%, 79.7% 20.3%, 90.45% 20.61%, 87.42% 30.93%, 97.55% 34.55%, 91.48% 43.43%);
+            animation: star-rotate 6s linear infinite; opacity: 0.12; pointer-events: none;
         }
 
-        /* --- Wish Card (Final Screen) --- */
+        /* --- Premium Button --- */
+        .button { cursor: pointer; position: relative; border: none; background: none; z-index: 2; }
+        .button > div { padding: 4px; border-radius: 1rem; background-color: var(--yellow-400); transform: translate(-4px, -4px); transition: 0.2s; box-shadow: 4px 4px 0 0 var(--yellow-400), 0 0 0 2px var(--stone-800); }
+        .button:active > div { transform: translate(0, 0); box-shadow: none; }
+        .button > div > div { background-color: var(--stone-800); border-radius: calc(1rem - 2px); padding: 14px 40px; color: #fff; font-weight: 800; font-size: 1.3rem; }
+
+        /* --- Wish Card --- */
         .card {
             width: 100%; max-width: 300px; height: 320px; padding: 5px; margin: 15px auto;
             background-image: linear-gradient(#ca1eb3, #FD2E24, #FFD701 70%);
-            border-radius: 12px; animation: slideUp 0.8s ease-out;
+            border-radius: 15px; animation: slideUp 0.8s ease;
         }
-        
         .card__content {
-            background-color: rgba(20, 20, 20, 0.95); backdrop-filter: blur(20px);
-            width: 100%; height: 100%; padding: 20px; border-radius: 10px;
+            background-color: rgba(15, 15, 15, 0.98); backdrop-filter: blur(20px);
+            width: 100%; height: 100%; padding: 20px; border-radius: 11px;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
-
-        .text-title { color: #fff; font-size: 1.8rem; font-weight: 800; margin: 0 0 15px 0; }
-        .text-body { 
-            color: #ffcc00; text-align: center; font-size: 1.15rem; 
-            line-height: 1.6; font-weight: 600; min-height: 120px;
-        }
-
-        /* --- Toast Popup --- */
-        #custom-toast {
-            position: fixed; top: 30px; background: #fff;
-            padding: 12px 30px; border-radius: 50px; color: #000; font-weight: 800;
-            z-index: 9999; transform: translateY(-150px); transition: 0.5s;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        #custom-toast.show { transform: translateY(0); }
-
-        /* --- NEXT BUTTON (Premium) --- */
-        .button { cursor: pointer; position: relative; border: none; background: none; animation: fadeIn 1s; }
-        .button > div { padding: 4px; border-radius: 1rem; background-color: var(--yellow-400); transform: translate(-4px, -4px); transition: 0.2s; box-shadow: 4px 4px 0 0 var(--yellow-400), 0 0 0 2px var(--stone-800); }
-        .button:active > div { transform: translate(0, 0); box-shadow: none; }
-        .button > div > div { background-color: var(--stone-800); border-radius: calc(1rem - 2px); padding: 14px 45px; color: #fff; font-weight: 800; font-size: 1.3rem; }
+        .text-title { color: #fff; font-size: 1.7rem; font-weight: 800; margin-bottom: 10px; }
+        .text-body { color: #ffcc00; text-align: center; font-size: 1.15rem; line-height: 1.6; font-weight: 600; min-height: 120px; }
 
         .hidden { display: none; }
         .share-box { background: rgba(255,255,255,0.08); padding: 15px; border-radius: 12px; word-break: break-all; border: 1.5px dashed var(--accent); margin: 20px 0; color: #acf7ff; text-align: center; }
+        #custom-toast { position: fixed; top: 30px; background: #fff; padding: 12px 30px; border-radius: 50px; color: #000; font-weight: 800; z-index: 9999; transform: translateY(-150px); transition: 0.5s; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        #custom-toast.show { transform: translateY(0); }
     </style>
 </head>
 <body>
@@ -150,9 +118,12 @@
     <div id="custom-toast">Link Copied! ✅</div>
 
     <div class="app-container" id="app">
-        <div id="screen-home" style="text-align: center; margin-top: 50px;">
-            <h1 style="color:var(--accent); font-size: 3.2rem; margin-bottom: 0;">Eid Salami🌙</h1>
-            <p style="opacity:0.8; font-size: 1.2rem; margin-bottom: 60px;">সালামি জিততে সঠিক উত্তর দিন!</p>
+        <div id="screen-home" style="text-align: center; margin-top: 40px;">
+            <h1 style="color:var(--accent); font-size: 3rem; margin-bottom: 10px;">Eid Salami🌙</h1>
+            <p style="opacity:0.7; margin-bottom: 40px;">সালামি জিততে কুইজটি খেলুন!</p>
+            
+            <input type="text" id="user-name" class="name-input" placeholder="আপনার নাম লিখুন...">
+            
             <div id="home-btns"></div>
         </div>
 
@@ -160,7 +131,7 @@
             <div id="progress-text" style="color:var(--accent); font-size:1.1rem; margin-bottom:12px; font-weight: bold; text-align: center;"></div>
             <div id="question-area"></div>
             <div id="options-container"></div>
-            <div id="action-btn-area" style="display:flex; justify-content:center; margin-top:auto; padding-bottom: 20px;"></div>
+            <div id="action-btn-area" class="btn-wrapper"></div>
         </div>
 
         <div id="screen-final" class="hidden">
@@ -169,7 +140,6 @@
     </div>
 
     <script>
-        // --- Firebase Configuration ---
         const firebaseConfig = {
             apiKey: "AIzaSyBTKGsT5CzPBbEGmqHfvkGPDHfIa8c6fQs",
             authDomain: "eid-salami-quiz.firebaseapp.com",
@@ -182,26 +152,14 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // wishes array (Same)
         const wishes = [
-            "দোস্ত, তুই সব সময় আমার পাশে থাকিস, এটাই বড় পাওয়া। তোর এবারের ঈদ কাটুক অনেক আনন্দে আর অনেক সালামি নিয়ে!",
-            "তোর মত বন্ধু পাওয়া ভাগ্যের ব্যাপার। আশা করি আমাদের এই পাগলামি সারা জীবন থাকবে। ঈদ মোবারক আমার জান!",
-            "সঠিক উত্তর দিয়ে প্রমান করলি তুই আমাকে কত চিনিস! তোর জন্য অনেক ভালোবাসা আর দোয়া রইল দোস্ত।",
-            "সালামি তো জাস্ট একটা বাহানা, আসলে তোকে ঈদের উইশ করাই ছিল মেইন প্ল্যান। অনেক ভালো থাকিস বন্ধু!",
-            "তোর জীবনটা যেন এই রঙের মতই রঙিন হয়। সব সময় হাসিখুশি থাকিস, আর আমাকে মাঝেমধ্যে ট্রিট দিস!",
-            "তুই আমার বেস্ট ফ্রেন্ড ছিলি আর থাকবি। তোর এই হাসি যেন সারা জীবন অটুট থাকে। ঈদ মোবারক!",
-            "তোর জন্য স্পেশাল একটা গিফট পেন্ডিং রইল। কুইজটা সুন্দরভাবে শেষ করার জন্য থ্যাংকস দোস্ত!",
-            "ঈদ মানেই আনন্দ, আর তোর মত বন্ধু থাকলে সেই আনন্দ দ্বিগুণ হয়ে যায়। অনেক অনেক ঈদ মোবারক!",
-            "তোর সব স্বপ্ন সত্যি হোক বন্ধু। এবারের ঈদ তোর জীবনের সেরা ঈদ হয়ে থাকুক এই দোয়াই করি।",
-            "তুই শুধু আমার বন্ধুই না, তুই আমার লাইফের একটা ইম্পর্ট্যান্ট পার্ট। অনেক ভালোবাসি তোকে দোস্ত!",
-            "সালামির টাকাটা কিন্তু বিকাশে পাঠিয়ে দিব, টেনশন করিস না! তুই সত্যি আমাকে অনেক ভালো চিনিস।",
-            "তোর মত একজন ক্রেজি ফ্রেন্ড থাকার মজাই আলাদা। ঈদ মোবারক, চল এবারের ঈদে অনেক মাস্তি করি!",
-            "তোর উজ্জ্বল ভবিষ্যতের জন্য সব সময় দোয়া করি। সব বাধা পেরিয়ে অনেক বড় হ বন্ধু!",
-            "তুই আছিস বলেই জীবনটা এত সহজ মনে হয়। থ্যাংকস বন্ধু সব সময় পাশে থাকার জন্য। ঈদ মোবারক!",
-            "সবশেষে এটাই বলব, তুই যেমন আছিস তেমনই থাকিস। তোর মত বন্ধু আর হয় না। শুভ ঈদ!"
+            "দোস্ত {name}, তুই সব সময় পাশে থাকিস এটাই বড় পাওয়া। ঈদ মোবারক!",
+            "{name}, তোর মত বন্ধু পাওয়া ভাগ্যের ব্যাপার। পাগলামি চলুক সারা জীবন!",
+            "সঠিক উত্তর দিয়ে প্রমান করলি তুই {name} আমাকে কতটা চিনিস! ভালোবাসা রইল।",
+            "সালামি তো বাহানা, আসলে তোকে {name} উইশ করাই ছিল মেইন প্ল্যান।",
+            "{name}, তোর জীবনটা যেন এই রঙের মতই রঙিন হয়। সব সময় হাসিখুশি থাকিস!"
         ];
 
-        // readyQuestions array (Same)
         const readyQuestions = [
             { q: "আমার প্রিয় খাবার কোনটি?", opts: ["বিরিয়ানি", "কাচ্চি", "ফুচকা", "বার্গার"] },
             { q: "আমি ফ্রি সময়ে কি করি?", opts: ["মুভি দেখি", "কোডিং করি", "ঘুমাই", "ঘুরতে যাই"] },
@@ -220,6 +178,7 @@
         let selectedAns = null;
         let score = 0;
         let mode = 'play';
+        let userName = "বন্ধু";
 
         function init() {
             const params = new URLSearchParams(window.location.search);
@@ -230,7 +189,10 @@
         }
 
         function generateStoneBtn(text, clickFn) {
-            return `<button class="button" onclick="${clickFn}"><div><div><div>${text}</div></div></div></button>`;
+            return `
+                <div class="spinning-bg"></div>
+                <button class="button" onclick="${clickFn}"><div><div><div>${text}</div></div></div></button>
+            `;
         }
 
         function showScreen(id) {
@@ -238,23 +200,25 @@
             document.getElementById(id).classList.remove('hidden');
         }
 
-        function startCreate() { mode = 'create'; showScreen('screen-main'); renderStep(); }
+        function validateName() {
+            const val = document.getElementById('user-name').value.trim();
+            if(val) { userName = val; return true; }
+            alert("দয়া করে আপনার নাম লিখুন!"); return false;
+        }
+
+        function startCreate() { 
+            if(!validateName()) return;
+            mode = 'create'; showScreen('screen-main'); renderStep(); 
+        }
 
         function renderStep() {
             const data = readyQuestions[currentIndex];
-            document.getElementById('progress-text').innerText = `Step: ${currentIndex + 1}/10`;
-            
-            // Spinning Question Box
-            document.getElementById('question-area').innerHTML = `
-                <div class="q-box-container">
-                    <div class="spinning-q">
-                        <div><div>${data.q}</div></div>
-                    </div>
-                </div>`;
+            document.getElementById('progress-text').innerText = `ধাপ: ${currentIndex + 1}/10`;
+            document.getElementById('question-area').innerHTML = `<div class="q-box"><div class="q-front">${data.q}</div></div>`;
             
             let optsHtml = "";
             data.opts.forEach((o, i) => { 
-                optsHtml += `<div class="opt-cyber-btn" id="opt-${i}" style="animation-delay: ${0.2 + (i*0.1)}s" onclick="selectOpt(${i})">${o}</div>`; 
+                optsHtml += `<div class="opt-cyber-btn" id="opt-${i}" style="animation-delay: ${0.1 + (i*0.1)}s" onclick="selectOpt(${i})">${o}</div>`; 
             });
             document.getElementById('options-container').innerHTML = optsHtml;
             document.getElementById('action-btn-area').innerHTML = generateStoneBtn("পরবর্তী", "handleNext()");
@@ -280,18 +244,21 @@
 
         function saveQuiz() {
             const id = "rakib" + Math.floor(Math.random() * 900000);
-            db.ref('quizzes/' + id).set({ questions: quizData }).then(() => {
+            db.ref('quizzes/' + id).set({ creator: userName, questions: quizData }).then(() => {
                 showScreen('screen-final');
                 const link = window.location.origin + window.location.pathname + "?id=" + id;
                 document.getElementById('final-body').innerHTML = `
-                    <h2 style="text-align:center; color:var(--accent); font-size: 2.2rem; animation: slideUp 0.5s;">Link Ready! 🚀</h2>
-                    <div class="share-box" style="animation: slideUp 0.7s;">${link}</div>
-                    <div style="display:flex; justify-content:center; animation: slideUp 0.9s;">${generateStoneBtn("লিঙ্ক কপি করুন", `copyLink('${link}')`)}</div>
+                    <h2 style="text-align:center; color:var(--accent); font-size: 2rem;">Ready ${userName}! 🚀</h2>
+                    <div class="share-box">${link}</div>
+                    <div style="display:flex; justify-content:center; margin-top:20px;">
+                        ${generateStoneBtn("লিঙ্ক কপি করুন", `copyLink('${link}')`)}
+                    </div>
                 `;
             });
         }
 
         function startQuiz(id) {
+            if(!validateName()) return;
             mode = 'play';
             db.ref('quizzes/' + id).once('value', snap => {
                 if(snap.exists()) {
@@ -305,61 +272,42 @@
         function renderPlayStep() {
             const data = quizData[currentIndex];
             document.getElementById('progress-text').innerText = `প্রশ্ন: ${currentIndex + 1}/${quizData.length}`;
-            
-            // Spinning Question Box
-            document.getElementById('question-area').innerHTML = `
-                <div class="q-box-container">
-                    <div class="spinning-q">
-                        <div><div>${data.q}</div></div>
-                    </div>
-                </div>`;
+            document.getElementById('question-area').innerHTML = `<div class="q-box"><div class="q-front">${data.q}</div></div>`;
             
             let optsHtml = "";
             data.opts.forEach((o, i) => { 
-                optsHtml += `<div class="opt-cyber-btn" id="opt-${i}" style="animation-delay: ${0.2 + (i*0.1)}s" onclick="selectOpt(${i})">${o}</div>`; 
+                optsHtml += `<div class="opt-cyber-btn" id="opt-${i}" style="animation-delay: ${0.1 + (i*0.1)}s" onclick="selectOpt(${i})">${o}</div>`; 
             });
             document.getElementById('options-container').innerHTML = optsHtml;
             document.getElementById('action-btn-area').innerHTML = generateStoneBtn("সাবমিট", "handleNext()");
             selectedAns = null;
         }
 
-        function typeWriter(text, element, speed = 50) {
-            let i = 0;
-            element.innerHTML = "";
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
-            }
+        function typeWriter(text, element) {
+            let i = 0; element.innerHTML = "";
+            function type() { if (i < text.length) { element.innerHTML += text.charAt(i); i++; setTimeout(type, 50); } }
             type();
         }
 
         function showFinalResult() {
             showScreen('screen-final');
-            const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+            let randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+            randomWish = randomWish.replace("{name}", userName);
             
             document.getElementById('final-body').innerHTML = `
                 <div style="text-align:center; animation: slideUp 0.5s;">
-                    <h2 style="color:var(--yellow-400); font-size: 1.6rem; margin-bottom:5px;">Result: ${score}/${quizData.length}</h2>
-                    <h3 style="color:var(--accent); font-size:2.5rem; margin-top:0;">সালামি: ৳${score * 100}</h3>
+                    <h2 style="color:var(--yellow-400); font-size: 1.5rem; margin-bottom:5px;">Result: ${score}/${quizData.length}</h2>
+                    <h3 style="color:var(--accent); font-size:2.2rem; margin-top:0;">সালামি: ৳${score * 100}</h3>
                 </div>
-                
-                <div class="card">
-                    <div class="card__content">
-                        <p class="text-title">Special Wish ✨</p>
-                        <p class="text-body" id="wish-text"></p>
-                    </div>
-                </div>
-
-                <div style="display:flex; justify-content:center; margin-top:15px; animation: slideUp 1s;">
+                <div class="card"><div class="card__content">
+                    <p class="text-title">Eid Wish ✨</p>
+                    <p class="text-body" id="wish-text"></p>
+                </div></div>
+                <div style="display:flex; justify-content:center; margin-top:20px;">
                     ${generateStoneBtn("হোমে ফিরুন", "location.href=window.location.pathname")}
                 </div>
             `;
-            setTimeout(() => {
-                typeWriter(randomWish, document.getElementById('wish-text'));
-            }, 800);
+            setTimeout(() => typeWriter(randomWish, document.getElementById('wish-text')), 800);
         }
 
         function copyLink(txt) {
