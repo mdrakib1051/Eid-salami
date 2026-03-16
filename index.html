@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Eid Salami Quiz</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Rubik:wght@400;700&family=Montserrat:wght@800&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
@@ -17,6 +17,7 @@
             --stone-800: #292524;
             --yellow-400: #facc15;
             --cyber-blue: #acf7ff;
+            --gold: #d4af37; /* Premium Gold Color */
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
@@ -38,7 +39,45 @@
             border: 1px solid rgba(172, 247, 255, 0.1);
         }
 
-        /* --- Uiverse TV Styles --- */
+        /* --- Premium Typography for Homepage --- */
+        .premium-eid-wish {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        .premium-eid-wish .part-1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 3rem;
+            line-height: 1;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, #fff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+            letter-spacing: -2px;
+        }
+        .premium-eid-wish .part-2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin: -5px 0 0 0;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+        }
+        .premium-eid-wish .part-3 {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 500;
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 10px 0 0 0;
+            display: block;
+        }
+
+        /* --- TV Styles --- */
         .main_wrapper { display: flex; align-items: center; justify-content: center; width: 100%; height: auto; margin: 15px 0; scale: 1.1; }
         .main { display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .antenna { width: 5em; height: 5em; border-radius: 50%; border: 2px solid black; background-color: #f27405; margin-bottom: -6em; z-index: -1; position: relative;}
@@ -47,7 +86,7 @@
         .a2 { position: relative; top: -210%; left: -10%; width: 12em; height: 4em; border-radius: 50px; background-image: linear-gradient(#171717, #171717, #353535, #353535, #171717); clip-path: polygon(47% 0, 47% 0, 34% 34%, 54% 25%, 32% 100%, 29% 96%, 49% 32%, 30% 38%); transform: rotate(-8deg); }
         .tv { width: 20em; height: 11em; margin-top: 3em; border-radius: 15px; background-color: #d36604; display: flex; justify-content: center; border: 2px solid #1d0e01; box-shadow: inset 0.2em 0.2em #e69635; position: relative; }
         .screen { width: 13.5em; height: 9.5em; border: 2px solid #1d0e01; background: #000; border-radius: 10px; z-index: 99; display: flex; align-items: center; justify-content: center; padding: 12px; margin-top: 0.6em; }
-        .notfound_text { font-size: 0.8em; color: #ffcc00; font-weight: bold; text-align: center; line-height: 1.4; font-family: 'Hind Siliguri'; }
+        .notfound_text { font-size: 0.75em; color: #ffcc00; font-weight: bold; text-align: center; line-height: 1.3; font-family: 'Hind Siliguri'; }
         .buttons_div { width: 4.5em; align-self: center; height: 9.5em; background-color: #e69635; border: 2px solid #1d0e01; padding: 0.6em; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-direction: column; row-gap: 0.85em; margin-top: 0.6em; }
         .b1, .b2 { width: 1.8em; height: 1.8em; border-radius: 50%; background-color: #7f5934; border: 2px solid black; position: relative; }
         .speakers { display: flex; flex-direction: column; row-gap: 0.6em; }
@@ -64,11 +103,9 @@
         .q-front { padding: 22px; border-radius: 15px; font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, #f27121, #e94057, #8a2387); text-align: center; }
 
         .button { font-family: "Rubik", sans-serif; cursor: pointer; position: relative; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; border-radius: 1rem; color: var(--stone-50); background: none; border: none; margin-top: 20px; }
-        .button::before { content: ""; position: absolute; z-index: 0; height: 220%; aspect-ratio: 1; background: white; clip-path: polygon(100% 50%, 91.48% 56.57%, 97.55% 65.45%, 87.42% 69.07%, 90.45% 79.39%, 79.7% 79.7%, 79.39% 90.45%, 69.07% 87.42%, 65.45% 97.55%, 56.57% 91.48%, 50% 100%, 43.43% 91.48%, 34.55% 97.55%, 30.93% 87.42%, 20.61% 90.45%, 20.3% 79.7%, 9.55% 79.39%, 12.58% 69.07%, 2.45% 65.45%, 8.52% 56.57%, 0% 50%, 8.52% 43.43%, 2.45% 34.55%, 12.58% 30.93%, 9.55% 20.61%, 20.3% 20.3%, 20.61% 9.55%, 30.93% 12.58%, 34.55% 2.45%, 43.43% 8.52%, 50% 0%, 56.57% 8.52%, 65.45% 2.45%, 69.07% 12.58%, 79.39% 9.55%, 79.7% 20.3%, 90.45% 20.61%, 87.42% 30.93%, 97.55% 34.55%, 91.48% 43.43%); animation: star-rotate 4s linear infinite; opacity: 0.1; }
         .button > div { padding: 2px; border-radius: 1rem; background-color: var(--yellow-400); transform: translate(-4px, -4px); box-shadow: 2px 2px 0 0 var(--yellow-400), 0 0 0 2px var(--stone-800), 0 0 0 4px var(--stone-50); }
         .button > div > div { position: relative; border-radius: calc(1rem - 2px); background-color: var(--stone-800); overflow: hidden; padding: 0.8rem 1.8rem; }
         
-        @keyframes star-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .hidden { display: none; }
         .share-box { background: rgba(255,255,255,0.08); padding: 15px; border-radius: 12px; border: 1.5px dashed var(--accent); margin: 20px 0; color: #acf7ff; text-align: center; font-size: 0.8rem; word-break: break-all; }
         #custom-toast { position: fixed; top: 30px; background: #fff; padding: 12px 30px; border-radius: 50px; color: #000; font-weight: 800; z-index: 9999; transform: translateY(-150px); transition: 0.5s; }
@@ -81,7 +118,11 @@
 
     <div class="app-container" id="app">
         <div id="screen-home" style="text-align: center; margin-top: 40px;">
-            <h1 style="color:var(--accent); font-size: 3rem;">Eid Salami🌙</h1>
+            <div class="premium-eid-wish">
+                <p class="part-1">EID-UL</p>
+                <p class="part-2">Adha</p>
+                <span class="part-3">Mubarak</span>
+            </div>
             <input type="text" id="user-name" class="name-input" placeholder="আপনার নাম লিখুন...">
             <div id="home-btns"></div>
         </div>
@@ -187,7 +228,6 @@
         }
 
         function saveQuiz() {
-            // ID generate based on user name
             const cleanName = userName.toLowerCase().replace(/\s+/g, '');
             const id = cleanName + Math.floor(Math.random() * 9000);
             db.ref('quizzes/' + id).set({ creator: userName, questions: quizData }).then(() => {
@@ -257,26 +297,19 @@
                 <div style="text-align:center;">
                     <h2 style="color:var(--yellow-400); margin-bottom:5px;">Score: ${score}/${quizData.length}</h2>
                 </div>
-                
                 <div class="main_wrapper">
                     <div class="main">
-                        <div class="antenna">
-                            <div class="antenna_shadow"></div>
-                            <div class="a1"></div><div class="a2"></div>
-                        </div>
+                        <div class="antenna"><div class="antenna_shadow"></div><div class="a1"></div><div class="a2"></div></div>
                         <div class="tv">
-                            <div class="display_div">
-                                <div class="screen"><span class="notfound_text" id="type-text"></span></div>
-                            </div>
+                            <div class="display_div"><div class="screen"><span class="notfound_text" id="type-text"></span></div></div>
                             <div class="buttons_div">
-                                <div class="b1"><div></div></div><div class="b2"></div>
+                                <div class="b1"></div><div class="b2"></div>
                                 <div class="speakers"><div class="g"></div><div class="g"></div><div class="g"></div></div>
                             </div>
                         </div>
                         <div class="bottom"><div class="base1"></div><div class="base2"></div></div>
                     </div>
                 </div>
-
                 <p style="text-align:center; color:rgba(255,255,255,0.6); font-size:0.85rem; padding: 0 15px; margin-top:20px;">
                     আপনিও কি চান আপনার বন্ধুরা আপনাকে কত চেনে তা জানতে? তাহলে বন্ধুদেরকেও বলুন কুইজ তৈরি করতে!
                 </p>
@@ -292,7 +325,6 @@
                 setTimeout(() => toast.classList.remove('show'), 3000);
             });
         }
-
         init();
     </script>
 </body>
