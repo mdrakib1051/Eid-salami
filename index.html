@@ -127,8 +127,13 @@
         .card__content {
             background-color: #0f0f0f; width: 100%; height: 100%; padding: 20px; border-radius: 11px;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
+            position: relative; overflow: hidden;
         }
-        .text-body { color: #ffcc00; text-align: center; font-size: 1.15rem; line-height: 1.6; font-weight: 600; }
+        .text-body { color: #ffcc00; text-align: center; font-size: 1.15rem; line-height: 1.6; font-weight: 600; z-index: 2;}
+
+        /* Wish Card sunset SVG (added back) */
+        .sunsetsvg { width: 313px; margin-left: -51.9px; margin-top: -100px; fill: black; opacity: 0.35; position: absolute; z-index: 1;}
+        #sun { fill: url(#MyGradient); }
 
         .hidden { display: none; }
         .share-box { background: rgba(255,255,255,0.08); padding: 15px; border-radius: 12px; border: 1.5px dashed var(--accent); margin: 20px 0; color: #acf7ff; text-align: center; }
@@ -285,6 +290,12 @@
             selectedAns = null;
         }
 
+        function typeWriter(text, element) {
+            let i = 0; element.innerHTML = "";
+            function type() { if (i < text.length) { element.innerHTML += text.charAt(i); i++; setTimeout(type, 50); } }
+            type();
+        }
+
         function showFinalResult() {
             showScreen('screen-final');
             document.getElementById('final-body').innerHTML = `
@@ -292,8 +303,17 @@
                     <h2 style="color:var(--yellow-400);">Score: ${score}/${quizData.length}</h2>
                     <h3 style="color:var(--accent);">সালামি: ৳${score * 100}</h3>
                 </div>
-                <div class="card"><div class="card__content"><p class="text-body">${userName}, ঈদ মোবারক! সঠিক উত্তর দিয়ে সালামি জিতে নিলে!</p></div></div>
-                <div style="display:flex; justify-content:center; margin-top:20px;">${generateUiverseBtn("হোমে ফিরুন", "location.href=window.location.pathname")}</div>
+                <div class="card"><div class="card__content">
+                    <p class="text-body">${userName}, ঈদ মোবারক! সঠিক উত্তর দিয়ে সালামি জিতে নিলে!</p>
+                    <svg class="sunsetsvg" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1312 876">
+                        <defs><linearGradient id="MyGradient" gradientTransform="rotate(90)"><stop offset="5%" stop-color="#ff632a"></stop><stop offset="95%" stop-color="#ffd900"></stop></linearGradient></defs>
+                        <g transform="translate(0,876) scale(0.1,-0.1)"><path id="sun" d="M6370 3905 c-52 -7 -135 -25 -184 -40 -88 -25 -236 -83 -236 -91 0 -2 276 -4 613 -4 l612 1 -38 20 c-54 28 -229 85 -322 104 -111 23 -327 28 -445 10z"></path></g>
+                    </svg>
+                </div></div>
+                <p style="text-align:center; color:rgba(255,255,255,0.6); font-size:0.9rem; padding: 0 10px;">
+                    আপনিও কি চান আপনার বন্ধুরা আপনাকে কত চেনে তা জানতে? তাহলে আপনার বন্ধুদেরকেও বলুন তাদের নামে কুইজ তৈরি করতে! নিচের বাটনে ক্লিক করে হোমে ফিরুন।
+                </p>
+                <div style="display:flex; justify-content:center; margin-top:10px;">${generateUiverseBtn("হোমে ফিরুন", "location.href=window.location.pathname")}</div>
             `;
         }
 
