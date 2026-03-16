@@ -45,7 +45,7 @@
 
         .q-front {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 20px; border-radius: 12px; font-size: 1.3rem; font-weight: 600;
+            padding: 20px; border-radius: 12px; font-size: 1.25rem; font-weight: 600;
             color: white; background: linear-gradient(to right, #f27121, #e94057, #8a2387);
             box-shadow: 0 10px 20px rgba(233, 64, 87, 0.3);
         }
@@ -78,18 +78,30 @@
             border-color: #fff;
         }
 
-        /* --- NEXT BUTTON (Stone Style) --- */
-        .button-wrapper { display: flex; justify-content: center; margin-top: auto; }
+        /* --- NEXT BUTTON (Stone Style + Animation) --- */
+        .button-wrapper { display: flex; justify-content: center; margin-top: auto; position: relative; }
+        
         .button {
             cursor: pointer; position: relative; display: inline-flex; 
             align-items: center; justify-content: center; border: none; background: none;
         }
+
+        /* Rotating Star Animation Background */
+        .button::before {
+            content: ""; position: absolute; z-index: 0; height: 180%; aspect-ratio: 1;
+            background: white; clip-path: polygon(100% 50%, 91.48% 56.57%, 97.55% 65.45%, 87.42% 69.07%, 90.45% 79.39%, 79.7% 79.7%, 79.39% 90.45%, 69.07% 87.42%, 65.45% 97.55%, 56.57% 91.48%, 50% 100%, 43.43% 91.48%, 34.55% 97.55%, 30.93% 87.42%, 20.61% 90.45%, 20.3% 79.7%, 9.55% 79.39%, 12.58% 69.07%, 2.45% 65.45%, 8.52% 56.57%, 0% 50%, 8.52% 43.43%, 2.45% 34.55%, 12.58% 30.93%, 9.55% 20.61%, 20.3% 20.3%, 20.61% 9.55%, 30.93% 12.58%, 34.55% 2.45%, 43.43% 8.52%, 50% 0%, 56.57% 8.52%, 65.45% 2.45%, 69.07% 12.58%, 79.39% 9.55%, 79.7% 20.3%, 90.45% 20.61%, 87.42% 30.93%, 97.55% 34.55%, 91.48% 43.43%);
+            animation: star-rotate 4s linear infinite; opacity: 0.1;
+        }
+
         .button > div { 
             padding: 3px; border-radius: 1rem; background-color: var(--yellow-400); 
             transform: translate(-4px, -4px); transition: 0.2s; 
-            box-shadow: 3px 3px 0 0 var(--yellow-400), 0 0 0 2px var(--stone-800); 
+            box-shadow: 3.5px 3.5px 0 0 var(--yellow-400), 0 0 0 2px var(--stone-800); 
+            position: relative; z-index: 1;
         }
+
         .button:active > div { transform: translate(0, 0); box-shadow: none; }
+        
         .button > div > div { 
             background-color: var(--stone-800); border-radius: calc(1rem - 2px); 
             padding: 12px 30px; color: #fff; font-weight: bold; font-size: 1.1rem;
@@ -97,8 +109,9 @@
 
         .hidden { display: none; }
         .score-display { font-size: 3.5rem; color: var(--yellow-400); text-align: center; font-weight: 700; margin: 20px 0; }
-        .share-box { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; word-break: break-all; border: 1px dashed var(--accent); margin: 20px 0; }
+        .share-box { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; word-break: break-all; border: 1px dashed var(--accent); margin: 20px 0; color: #00f2ff; }
         
+        @keyframes star-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -113,13 +126,8 @@
 
         <div id="screen-main" class="hidden">
             <div id="progress-text" style="color:var(--accent); font-size:0.9rem; margin-bottom:10px; font-weight: bold;"></div>
-            
-            <div class="q-box">
-                <div class="q-front" id="display-q"></div>
-            </div>
-
+            <div class="q-box"><div class="q-front" id="display-q"></div></div>
             <div id="options-container"></div>
-            
             <div id="action-btn-area" class="button-wrapper"></div>
         </div>
 
@@ -130,6 +138,7 @@
     </div>
 
     <script>
+        // --- Firebase Config ---
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -217,7 +226,7 @@
 
         function saveQuiz() {
             const id = "rakib" + Math.floor(Math.random() * 900000);
-            document.getElementById('action-btn-area').innerHTML = "<p>Saving...</p>";
+            document.getElementById('action-btn-area').innerHTML = "<p>সেভ হচ্ছে...</p>";
             db.ref('quizzes/' + id).set({ questions: quizData }).then(() => {
                 showScreen('screen-final');
                 const link = window.location.origin + window.location.pathname + "?id=" + id;
@@ -236,7 +245,7 @@
                     quizData = snap.val().questions;
                     showScreen('screen-main');
                     renderPlayStep();
-                } else { alert("Error!"); }
+                } else { alert("Quiz not found!"); location.href=window.location.pathname; }
             });
         }
 
@@ -257,7 +266,7 @@
             showScreen('screen-final');
             document.getElementById('final-body').innerHTML = `
                 <div class="score-display">৳${score * 100}</div>
-                <p style="text-align:center;">আপনার সালামি জমা হয়েছে!</p>
+                <p style="text-align:center; font-size: 1.2rem;">আপনার সালামি জমা হয়েছে!</p>
                 <div style="display:flex; justify-content:center; margin-top:40px;">
                     ${generateStoneBtn("হোমে ফিরুন", "location.href=window.location.pathname")}
                 </div>
@@ -265,13 +274,13 @@
         }
 
         function showScreen(id) {
-            document.querySelectorAll('.app-container > div').forEach(s => s.classList.add('hidden'));
+            const screens = ['screen-home', 'screen-main', 'screen-final'];
+            screens.forEach(s => document.getElementById(s).classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
         }
 
         function copyLink(txt) {
-            navigator.clipboard.writeText(txt);
-            alert("কপি হয়েছে!");
+            navigator.clipboard.writeText(txt).then(() => alert("কপি হয়েছে!"));
         }
 
         init();
