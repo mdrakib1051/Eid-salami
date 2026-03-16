@@ -117,20 +117,29 @@
 
         let player;
         let isMusicPlaying = false;
-        // User's specific YouTube ID: R6ePrTGODHs (O Mor Romjaner Oi Rojar Sheshe)
-        const mySongId = 'R6ePrTGODHs'; 
+        // Correct YouTube ID: R6ePrTG0DHs (O Mor Romjaner Oi Rojar Sheshe)
+        const mySongId = 'R6ePrTG0DHs'; 
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
                 height: '0', width: '0',
                 videoId: mySongId,
-                playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': mySongId },
-                events: { 'onReady': () => console.log("Song Ready") }
+                playerVars: { 
+                    'autoplay': 0, 
+                    'controls': 0, 
+                    'loop': 1, 
+                    'playlist': mySongId,
+                    'origin': window.location.origin 
+                },
+                events: { 
+                    'onReady': (e) => console.log("Song Loaded"),
+                    'onError': (e) => console.log("Player Error", e)
+                }
             });
         }
 
         function startMusic() {
-            if(!isMusicPlaying && player) {
+            if(!isMusicPlaying && player && typeof player.playVideo === 'function') {
                 player.playVideo();
                 isMusicPlaying = true;
             }
@@ -249,7 +258,7 @@
             document.getElementById('final-body').innerHTML = `
                 <div style="text-align:center; margin-bottom: 20px;"><h2 style="color:var(--yellow-400); font-size: 1.8rem;">আপনার স্কোর: ${score}/${quizData.length}</h2></div>
                 <div class="main_wrapper"><div class="main"><div class="antenna"><div class="antenna_shadow"></div><div class="a1"></div><div class="a2"></div></div><div class="tv"><div class="display_div"><div class="screen"><span class="notfound_text" id="type-text"></span></div></div><div class="buttons_div"><div class="b1"></div><div class="b2"></div><div class="speakers"><div class="g"></div><div class="g"></div><div class="g"></div></div></div></div><div class="bottom"><div class="base1"></div><div class="base2"></div></div></div></div>
-                <p style="text-align:center; color:rgba(255,255,255,0.6); font-size:0.9rem; padding: 20px;">আপনিও কি চান আপনার বন্ধুরা আপনাকে কতটুকু চেনে তা দেখতে? এখনই কুইজ তৈরি করুন!</p>
+                <p style="text-align:center; color:rgba(255,255,255,0.6); font-size:0.9rem; padding: 20px;">আপনিও কি চান আপনার বন্ধুরা আপনাকে কতটুকু চেনে তা দেখতে? তাহলে এখনই কুইজ তৈরি করুন!</p>
                 <div style="display:flex; justify-content:center;">${generateUiverseBtn("হোমে ফিরে যান", "location.href=window.location.pathname")}</div>
             `;
             setTimeout(() => typeWriter(resultMsg, document.getElementById('type-text')), 600);
